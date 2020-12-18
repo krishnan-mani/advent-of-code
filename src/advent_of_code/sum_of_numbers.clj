@@ -11,9 +11,15 @@
   [coll key]
   (boolean (some #(= % key) coll)))
 
+(def sum 2020)
+
 (defn -main
   [& args]
-  (print (first (filter #(lazy-contains? numbers (- 2020 %)) numbers))))
+  (def first-value (first (filter #(lazy-contains? numbers (- sum %)) numbers)))
+  (def second-value (- sum first-value))
+  (def solution [first-value second-value])
+  (println (format "%d, %d" first-value second-value))
+  )
 
 
 
