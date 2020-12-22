@@ -18,6 +18,11 @@
   (last (str/split (first (str/split _string #":")) #" "))
   )
 
+(defn get-password
+  [_string]
+  (subs (last (str/split _string #":")) 1)
+  )
+
 (defn occurences
   [_string chr]
   (loop [idx (dec (count _string))

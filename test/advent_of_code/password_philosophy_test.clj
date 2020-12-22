@@ -26,3 +26,7 @@
 (deftest char-to-test-test
   (is (= "r" (char-to-test "1-13 r: gqdrspndrpsrjfjx")))
   )
+
+(deftest get-password-test
+  (is (= "gqdrspndrpsrjfjx" (get-password "1-13 r: gqdrspndrpsrjfjx")))
+  )
