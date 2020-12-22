@@ -1,6 +1,5 @@
 (ns advent-of-code.password-philosophy
-  (:require [clojure.string :as str])
-  (:require [clojure.test :refer :all]))
+  (:require [clojure.string :as str]))
 
 (defn read-passwords-from-file [filename]
   (str/split-lines (slurp filename)))
