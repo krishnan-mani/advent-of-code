@@ -15,8 +15,10 @@
   (is (= true (valid? "foo" 1 2 "o")))
   )
 
-
-
 (deftest min-occurences-test
   (is (= 1 (min-occurences "1-13 r: gqdrspndrpsrjfjx")))
+  )
+
+(deftest max-occurences-test
+  (is (= 13 (max-occurences "1-13 r: gqdrspndrpsrjfjx")))
   )

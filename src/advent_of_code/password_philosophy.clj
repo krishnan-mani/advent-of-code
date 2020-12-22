@@ -9,6 +9,10 @@
   [_string]
   (read-string (subs _string 0 1)))
 
+(defn max-occurences
+  [_string]
+  (read-string (last (str/split (first (str/split _string #" ")) #"-"))))
+
 (defn occurences
   [_string chr]
   (loop [idx (dec (count _string))
