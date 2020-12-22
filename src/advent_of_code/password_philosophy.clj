@@ -41,8 +41,18 @@
       (<= occurences max))
     ))
 
+(defn valid-password-line?
+  [_line]
+  (let [password (get-password _line)
+        min (min-occurences _line)
+        max (max-occurences _line)
+        chr (char-to-test _line)]
+    (valid? password min max chr)))
+
 (defn -main
   [& args]
-  (println "foo"))
-
-
+  (println "Number of valid passwords:"
+           (count
+             (remove #(if (valid-password-line? %) false true) (read-passwords-from-file "test/resources/password_policies.txt")))
+           )
+  )
