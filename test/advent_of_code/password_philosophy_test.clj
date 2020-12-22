@@ -22,3 +22,7 @@
 (deftest max-occurences-test
   (is (= 13 (max-occurences "1-13 r: gqdrspndrpsrjfjx")))
   )
+
+(deftest char-to-test-test
+  (is (= "r" (char-to-test "1-13 r: gqdrspndrpsrjfjx")))
+  )

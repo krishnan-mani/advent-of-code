@@ -13,6 +13,11 @@
   [_string]
   (read-string (last (str/split (first (str/split _string #" ")) #"-"))))
 
+(defn char-to-test
+  [_string]
+  (last (str/split (first (str/split _string #":")) #" "))
+  )
+
 (defn occurences
   [_string chr]
   (loop [idx (dec (count _string))
