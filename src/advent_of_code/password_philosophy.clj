@@ -5,6 +5,10 @@
 (defn read-passwords-from-file [filename]
   (str/split-lines (slurp filename)))
 
+(defn min-occurences
+  [_string]
+  (read-string (subs _string 0 1)))
+
 (defn occurences
   [_string chr]
   (loop [idx (dec (count _string))
