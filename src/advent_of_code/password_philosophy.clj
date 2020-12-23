@@ -38,19 +38,19 @@
         (dec idx)
         (if (= chr (subs _string idx (inc idx))) (inc ans) (+ 0 ans))))))
 
-(defn valid-by-occurence? [password min max chr]
+(defn valid-by-occurrence? [password min max chr]
   (let [occurrences (occurrences password chr)]
     (and
       (>= occurrences min)
       (<= occurrences max))
     ))
 
-(defn valid-password-line-by-occurence? [_password-line]
+(defn valid-password-line-by-occurrence? [_password-line]
   (let [password (:password _password-line)
         min (:min _password-line)
         max (:max _password-line)
         chr (:chr _password-line)]
-    (valid-by-occurence? password min max chr)))
+    (valid-by-occurrence? password min max chr)))
 
 (defn get-positions [_string chr]
   (let [_length (count _string)]
@@ -94,7 +94,7 @@
 (defn -main [& args]
   (println "Number of valid passwords (old job):"
            (let [password-lines-by-occurrence (read-passwords-from-file read-password-line-with-occurrences "test/resources/password_policies.txt")]
-             (count-true valid-password-line-by-occurence? password-lines-by-occurrence)
+             (count-true valid-password-line-by-occurrence? password-lines-by-occurrence)
              ))
 
   (println "Number of valid passwords (by position):"

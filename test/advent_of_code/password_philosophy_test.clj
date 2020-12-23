@@ -11,8 +11,8 @@
   )
 
 (deftest occurences-test
-  (is (= false (valid-by-occurence? "foo" 1 2 "a")))
-  (is (= true (valid-by-occurence? "foo" 1 2 "o")))
+  (is (= false (valid-by-occurrence? "foo" 1 2 "a")))
+  (is (= true (valid-by-occurrence? "foo" 1 2 "o")))
   )
 
 (deftest min-occurences-test
@@ -37,14 +37,14 @@
   )
 
 (deftest valid-password-line?-test
-  (is (= true (valid-password-line-by-occurence? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
+  (is (= true (valid-password-line-by-occurrence? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
   )
 
 (deftest valid?-test
-  (is (= true (valid-by-occurence? "abc" 1 2 "a")))
-  (is (= false (valid-by-occurence? "cbc" 1 2 "a")))
-  (is (= true (valid-by-occurence? "cbc" 0 2 "a")))
-  (is (= false (valid-by-occurence? "vjkxbrfwnj" 2 6 "x")))
+  (is (= true (valid-by-occurrence? "abc" 1 2 "a")))
+  (is (= false (valid-by-occurrence? "cbc" 1 2 "a")))
+  (is (= true (valid-by-occurrence? "cbc" 0 2 "a")))
+  (is (= false (valid-by-occurrence? "vjkxbrfwnj" 2 6 "x")))
   )
 
 (deftest read-password-line-with-positions-test
