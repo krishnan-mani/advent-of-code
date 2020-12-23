@@ -21,8 +21,8 @@
   )
 
 (deftest jump-test
-  (is (= {:y 1 :x 3} (jump 0)))
-  (is (= {:y 2 :x 6} (jump 1)))
+  (is (= {:y 1 :x 3} (right-3-down-1 0)))
+  (is (= {:y 2 :x 6} (right-3-down-1 1)))
   )
 
 (deftest bin-truth-test
@@ -48,7 +48,7 @@
   )
 
 (deftest navigate-test
-  (is (= 1 (navigate (:1 small-grid-test))))
-  (is (= 2 (navigate (:2 small-grid-test))))
-  (is (= 3 (navigate (:3 small-grid-test))))
+  (is (= 1 (count-trees-for-slope right-3-down-1 (:1 small-grid-test))))
+  (is (= 2 (count-trees-for-slope right-3-down-1 (:2 small-grid-test))))
+  (is (= 3 (count-trees-for-slope right-3-down-1 (:3 small-grid-test))))
   )
