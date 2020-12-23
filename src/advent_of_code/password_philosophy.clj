@@ -7,17 +7,17 @@
 (defn first-before-delimiter [_string _delimiter]
   (first (str/split _string (re-pattern _delimiter))))
 
-(defn last-after-hyphen [_string]
-  (last (str/split _string #"-")))
+(defn last-after-delimiter [_string _delimiter]
+  (last (str/split _string (re-pattern _delimiter))))
 
 (defn max-occurences [_string]
-  (read-string (last-after-hyphen (first-before-delimiter _string " "))))
+  (read-string (last-after-delimiter (first-before-delimiter _string " ") "-")))
 
 (defn char-to-test [_string]
-  (last (str/split (first (str/split _string #":")) #" ")))
+  (last-after-delimiter (first-before-delimiter _string ":") " "))
 
 (defn get-password [_string]
-  (subs (last (str/split _string #":")) 1))
+  (str/trim (last-after-delimiter _string ":")))
 
 (defn read-password-line [_line]
   {:min      (min-occurences _line)
@@ -27,8 +27,7 @@
   )
 
 (defn read-passwords-from-file [filename]
-  (map read-password-line (str/split-lines (slurp filename)))
-  )
+  (map read-password-line (str/split-lines (slurp filename))))
 
 (defn occurences [_string chr]
   (loop [idx (dec (count _string))
