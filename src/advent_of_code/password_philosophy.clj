@@ -4,8 +4,14 @@
 (defn min-occurences [_string]
   (read-string (subs _string 0 1)))
 
+(defn first-before-space [_string]
+  (first (str/split _string #" ")))
+
+(defn last-after-hyphen [_string]
+  (last (str/split _string #"-")))
+
 (defn max-occurences [_string]
-  (read-string (last (str/split (first (str/split _string #" ")) #"-"))))
+  (read-string (last-after-hyphen (first-before-space _string))))
 
 (defn char-to-test [_string]
   (last (str/split (first (str/split _string #":")) #" ")))
