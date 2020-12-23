@@ -55,6 +55,6 @@
 (def password-lines (read-passwords-from-file "test/resources/password_policies.txt"))
 (defn -main [& args]
   (println "Number of valid passwords:"
-           (count
-             (remove #(if (valid-password-line? %) false true) password-lines)))
+           (count (filter identity (map valid-password-line? password-lines))
+                  ))
   )

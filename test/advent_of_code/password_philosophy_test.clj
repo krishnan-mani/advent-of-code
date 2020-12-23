@@ -3,7 +3,7 @@
   (:require [advent-of-code.password-philosophy :refer :all]))
 
 
-(deftest valid?-test
+(deftest occurrences-test
   (is (= 0 (occurrences "" "a")))
   (is (= 0 (occurrences "b" "a")))
   (is (= 1 (occurrences "a" "a")))
@@ -38,4 +38,11 @@
 
 (deftest valid-password-line?-test
   (is (= true (valid-password-line? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
+  )
+
+(deftest valid?-test
+  (is (= true (valid? "abc" 1 2 "a")))
+  (is (= false (valid? "cbc" 1 2 "a")))
+  (is (= true (valid? "cbc" 0 2 "a")))
+  (is (= false (valid? "vjkxbrfwnj" 2 6 "x")))
   )
