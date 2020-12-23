@@ -11,20 +11,33 @@
   (is (= "#" (landed-on ".#" 1)))
   )
 
+(deftest landed-on-beyond-test
+  (is (= "." (landed-on ".#" 2)))
+  (is (= "#" (landed-on ".#" 3)))
+  (is (= "." (landed-on "...#..#.##..#.#......#.#.#.#..#" 31)))
+  (is (= "." (landed-on "...#..#.##..#.#......#.#.#.#..#" 32)))
+  (is (= "." (landed-on "...#..#.##..#.#......#.#.#.#..#" 33)))
+  (is (= "#" (landed-on "...#..#.##..#.#......#.#.#.#..#" 34)))
+  )
+
 (deftest jump-test
-  (is (= {:y 1 :x 2}) (jump 0))
-  (is (= {:y 2 :x 5}) (jump 1))
+  (is (= {:y 1 :x 3} (jump 0)))
+  (is (= {:y 2 :x 6} (jump 1)))
   )
 
-(deftest binary-truth-test
-  (is (= 1 (binary-truth true)))
-  (is (= 0 (binary-truth false)))
+(deftest bin-truth-test
+  (is (= 1 (bin-truth true)))
+  (is (= 0 (bin-truth false)))
   )
 
-(def small-grid-test {:2 [
-                          "#.#.#.#.#"
-                          "..#..#..#"
-                          "..#..#..#"
+(def small-grid-test {:1 [
+                          "........."
+                          "...#....."
+                          ]
+                      :2 [
+                          "........."
+                          "...#.#..#"
+                          "..#..##.#"
                           ]
                       :3 [
                           "#########"
@@ -35,6 +48,7 @@
   )
 
 (deftest navigate-test
+  (is (= 1 (navigate (:1 small-grid-test))))
   (is (= 2 (navigate (:2 small-grid-test))))
   (is (= 3 (navigate (:3 small-grid-test))))
   )
