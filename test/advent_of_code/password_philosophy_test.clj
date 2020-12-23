@@ -30,3 +30,8 @@
 (deftest get-password-test
   (is (= "gqdrspndrpsrjfjx" (get-password "1-13 r: gqdrspndrpsrjfjx")))
   )
+
+(deftest read-password-line-test
+  (is (= {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"}
+         (read-password-line "1-13 r: gqdrspndrpsrjfjx")))
+  )

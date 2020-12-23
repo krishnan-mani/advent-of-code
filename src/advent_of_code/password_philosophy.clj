@@ -16,6 +16,13 @@
 (defn get-password [_string]
   (subs (last (str/split _string #":")) 1))
 
+(defn read-password-line [_line]
+  {:min      (min-occurences _line)
+   :max      (max-occurences _line)
+   :chr      (char-to-test _line)
+   :password (get-password _line)}
+  )
+
 (defn occurences [_string chr]
   (loop [idx (dec (count _string))
          ans 0]
