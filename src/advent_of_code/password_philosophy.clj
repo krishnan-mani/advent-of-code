@@ -7,29 +7,29 @@
 (defn last-after-delimiter [_string _delimiter]
   (last (str/split _string (re-pattern _delimiter))))
 
-(defn min-occurences [_string]
+(defn min-occurrences [_string]
   (read-string (first-before-delimiter _string "-")))
 
-(defn max-occurences [_string]
+(defn max-occurrences [_string]
   (read-string (last-after-delimiter (first-before-delimiter _string " ") "-")))
 
-(defn char-to-test [_string]
+(defn char-to-check [_string]
   (last-after-delimiter (first-before-delimiter _string ":") " "))
 
 (defn get-password [_string]
   (str/trim (last-after-delimiter _string ":")))
 
 (defn read-password-line [_line]
-  {:min      (min-occurences _line)
-   :max      (max-occurences _line)
-   :chr      (char-to-test _line)
+  {:min      (min-occurrences _line)
+   :max      (max-occurrences _line)
+   :chr      (char-to-check _line)
    :password (get-password _line)}
   )
 
 (defn read-passwords-from-file [filename]
   (map read-password-line (str/split-lines (slurp filename))))
 
-(defn occurences [_string chr]
+(defn occurrences [_string chr]
   (loop [idx (dec (count _string))
          ans 0]
     (if-not (>= idx 0)
@@ -39,10 +39,10 @@
         (if (= chr (subs _string idx (inc idx))) (inc ans) (+ 0 ans))))))
 
 (defn valid? [password min max chr]
-  (let [occurences (occurences password chr)]
+  (let [occurrences (occurrences password chr)]
     (and
-      (>= occurences min)
-      (<= occurences max))
+      (>= occurrences min)
+      (<= occurrences max))
     ))
 
 (defn valid-password-line? [_password-line]

@@ -4,10 +4,10 @@
 
 
 (deftest valid?-test
-  (is (= 0 (occurences "" "a")))
-  (is (= 0 (occurences "b" "a")))
-  (is (= 1 (occurences "a" "a")))
-  (is (= 2 (occurences "caba" "a")))
+  (is (= 0 (occurrences "" "a")))
+  (is (= 0 (occurrences "b" "a")))
+  (is (= 1 (occurrences "a" "a")))
+  (is (= 2 (occurrences "caba" "a")))
   )
 
 (deftest occurences-test
@@ -16,15 +16,15 @@
   )
 
 (deftest min-occurences-test
-  (is (= 1 (min-occurences "1-13 r: gqdrspndrpsrjfjx")))
+  (is (= 1 (min-occurrences "1-13 r: gqdrspndrpsrjfjx")))
   )
 
 (deftest max-occurences-test
-  (is (= 13 (max-occurences "1-13 r: gqdrspndrpsrjfjx")))
+  (is (= 13 (max-occurrences "1-13 r: gqdrspndrpsrjfjx")))
   )
 
-(deftest char-to-test-test
-  (is (= "r" (char-to-test "1-13 r: gqdrspndrpsrjfjx")))
+(deftest char-to-check-test
+  (is (= "r" (char-to-check "1-13 r: gqdrspndrpsrjfjx")))
   )
 
 (deftest get-password-test
