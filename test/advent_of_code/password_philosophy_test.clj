@@ -11,8 +11,8 @@
   )
 
 (deftest occurences-test
-  (is (= false (valid? "foo" 1 2 "a")))
-  (is (= true (valid? "foo" 1 2 "o")))
+  (is (= false (valid-by-occurence? "foo" 1 2 "a")))
+  (is (= true (valid-by-occurence? "foo" 1 2 "o")))
   )
 
 (deftest min-occurences-test
@@ -33,16 +33,33 @@
 
 (deftest read-password-line-test
   (is (= {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"}
-         (read-password-line "1-13 r: gqdrspndrpsrjfjx")))
+         (read-password-line-with-occurrences "1-13 r: gqdrspndrpsrjfjx")))
   )
 
 (deftest valid-password-line?-test
-  (is (= true (valid-password-line? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
+  (is (= true (valid-password-line-by-occurence? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
   )
 
 (deftest valid?-test
-  (is (= true (valid? "abc" 1 2 "a")))
-  (is (= false (valid? "cbc" 1 2 "a")))
-  (is (= true (valid? "cbc" 0 2 "a")))
-  (is (= false (valid? "vjkxbrfwnj" 2 6 "x")))
+  (is (= true (valid-by-occurence? "abc" 1 2 "a")))
+  (is (= false (valid-by-occurence? "cbc" 1 2 "a")))
+  (is (= true (valid-by-occurence? "cbc" 0 2 "a")))
+  (is (= false (valid-by-occurence? "vjkxbrfwnj" 2 6 "x")))
+  )
+
+(deftest read-password-line-with-positions-test
+  (is (= {:first 1 :last 13 :chr "r" :password "gqdrspndrpsrjfjx"} (read-password-line-with-positions "1-13 r: gqdrspndrpsrjfjx")))
+  )
+
+(deftest get-positions-test
+  (is (= [] (get-positions "cbc" "a")))
+  (is (= [1] (get-positions "abc" "a")))
+  (is (= [1 2] (get-positions "aac" "a")))
+  (is (= [1 3] (get-positions "aca" "a")))
+  )
+
+(deftest valid-by-position?-test
+  (is (= true (valid-by-position? "abcde" 1 3 "a")))
+  (is (= false (valid-by-position? "cdefg" 1 3 "b")))
+  (is (= false (valid-by-position? "ccccccccc" 2 9 "b")))
   )
