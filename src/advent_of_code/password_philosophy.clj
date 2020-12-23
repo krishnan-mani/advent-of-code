@@ -1,9 +1,6 @@
 (ns advent-of-code.password-philosophy
   (:require [clojure.string :as str]))
 
-(defn read-passwords-from-file [filename]
-  (str/split-lines (slurp filename)))
-
 (defn min-occurences [_string]
   (read-string (subs _string 0 1)))
 
@@ -23,6 +20,10 @@
    :password (get-password _line)}
   )
 
+(defn read-passwords-from-file [filename]
+  (map read-password-line (str/split-lines (slurp filename)))
+  )
+
 (defn occurences [_string chr]
   (loop [idx (dec (count _string))
          ans 0]
@@ -39,11 +40,11 @@
       (<= occurences max))
     ))
 
-(defn valid-password-line? [_line]
-  (let [password (get-password _line)
-        min (min-occurences _line)
-        max (max-occurences _line)
-        chr (char-to-test _line)]
+(defn valid-password-line? [_password-line]
+  (let [password (:password _password-line)
+        min (:min _password-line)
+        max (:max _password-line)
+        chr (:chr _password-line)]
     (valid? password min max chr)))
 
 (def password-lines (read-passwords-from-file "test/resources/password_policies.txt"))

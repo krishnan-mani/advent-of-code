@@ -35,3 +35,7 @@
   (is (= {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"}
          (read-password-line "1-13 r: gqdrspndrpsrjfjx")))
   )
+
+(deftest valid-password-line?-test
+  (is (= true (valid-password-line? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
+  )
