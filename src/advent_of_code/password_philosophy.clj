@@ -1,14 +1,14 @@
 (ns advent-of-code.password-philosophy
   (:require [clojure.string :as str]))
 
-(defn min-occurences [_string]
-  (read-string (subs _string 0 1)))
-
 (defn first-before-delimiter [_string _delimiter]
   (first (str/split _string (re-pattern _delimiter))))
 
 (defn last-after-delimiter [_string _delimiter]
   (last (str/split _string (re-pattern _delimiter))))
+
+(defn min-occurences [_string]
+  (read-string (first-before-delimiter _string "-")))
 
 (defn max-occurences [_string]
   (read-string (last-after-delimiter (first-before-delimiter _string " ") "-")))
