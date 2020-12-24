@@ -3,14 +3,29 @@
   (:require [advent-of-code.passport-processing :refer :all]))
 
 
-(def test-passport
+(def valid-test-passport
   "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd\nbyr:1937 iyr:2017 cid:147 hgt:183cm"
+  )
+(def valid-test-passport-data-items
+  ["ecl:gry" "pid:860033327" "eyr:2020" "hcl:#fffffd" "byr:1937" "iyr:2017" "cid:147" "hgt:183cm"]
+  )
+
+(def valid-test-passport-fields
+  ["ecl" "pid" "eyr" "hcl" "byr" "iyr" "cid" "hgt"]
   )
 
 (deftest valid-passport?-test
-  (is (= true (valid-passport? test-passport)))
+  (is (= true (valid-passport? valid-test-passport)))
   )
 
 (deftest get-data-items-test
-  (is (= ["ecl:gry" "pid:860033327" "eyr:2020" "hcl:#fffffd" "byr:1937" "iyr:2017" "cid:147" "hgt:183cm"] (get-data-items test-passport)))
+  (is (= valid-test-passport-data-items (get-data-items valid-test-passport)))
+  )
+
+(deftest get-fields-test
+  (is (= valid-test-passport-fields (get-fields valid-test-passport-data-items)))
+  )
+
+(deftest has-required-fields?-test
+  (is (= true (has-required-fields? valid-test-passport)))
   )
