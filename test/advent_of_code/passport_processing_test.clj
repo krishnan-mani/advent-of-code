@@ -50,3 +50,8 @@
   (is (= true (valid-birth-year? "byr:2002")))
   (is (= false (valid-birth-year? "byr:2003")))
   )
+
+(deftest valid-issue-year?-test
+  (is (= true (valid-issue-year? "iyr:2012")))
+  (is (= false (valid-issue-year? "iyr:2022")))
+  )

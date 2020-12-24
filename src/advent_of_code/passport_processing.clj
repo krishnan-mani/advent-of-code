@@ -26,7 +26,10 @@
   )
 
 (defn valid-issue-year? [_string]
-  true)
+  (let [issue-year (read-string (last (str/split _string #":")))]
+    (and (<= 2010 issue-year)
+         (<= issue-year 2020)))
+  )
 
 (defn valid-expiration-year? [_string]
   true)
