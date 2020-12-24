@@ -13,7 +13,7 @@
   )
 
 (defn has-required-fields? [_passport]
-  (every? required-fields (remove optional-fields (get-fields (get-data-items _passport))))
+  (every? (set (remove optional-fields (get-fields (get-data-items _passport)))) required-fields)
   )
 
 (defn valid-passport? [_passport]
