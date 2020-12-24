@@ -39,11 +39,16 @@
   (is (= true (has-required-fields? valid-test-passport)))
   )
 
+
+(def full-invalid-test-passport
+  "eyr:1972 cid:100\nhcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926")
+
 (def fully-valid-test-passport
   "pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980\nhcl:#623a2f")
 
 (deftest fully-valid-passport?-test
   (is (= true (fully-valid-passport? fully-valid-test-passport)))
+  (is (= false (fully-valid-passport? full-invalid-test-passport)))
   )
 
 (deftest valid-birth-year?-test
