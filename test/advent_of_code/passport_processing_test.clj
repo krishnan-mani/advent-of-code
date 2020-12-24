@@ -20,11 +20,11 @@
 (def valid-test-passport-fields
   ["ecl" "pid" "eyr" "hcl" "byr" "iyr" "cid" "hgt"])
 
-(deftest valid-passport?-test
-  (is (= true (valid-passport? valid-test-passport)))
-  (is (= false (valid-passport? invalid-test-passport)))
-  (is (= true (valid-passport? another-valid-test-passport)))
-  (is (= false (valid-passport? another-invalid-test-passport)))
+(deftest basically-valid-passport?-test
+  (is (= true (basically-valid-passport? valid-test-passport)))
+  (is (= false (basically-valid-passport? invalid-test-passport)))
+  (is (= true (basically-valid-passport? another-valid-test-passport)))
+  (is (= false (basically-valid-passport? another-invalid-test-passport)))
   )
 
 (deftest get-data-items-test
@@ -37,4 +37,16 @@
 
 (deftest has-required-fields?-test
   (is (= true (has-required-fields? valid-test-passport)))
+  )
+
+(def fully-valid-test-passport
+  "pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980\nhcl:#623a2f")
+
+(deftest fully-valid-passport?-test
+  (is (= true (fully-valid-passport? fully-valid-test-passport)))
+  )
+
+(deftest valid-birth-year?-test
+  (is (= true (valid-birth-year? "2002")))
+  (is (= false (valid-birth-year? "2003")))
   )
