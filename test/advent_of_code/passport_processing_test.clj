@@ -66,15 +66,28 @@
   (is (= false (valid-eye-color? "ecl:foo")))
   )
 
-
 ;hgt (Height) - a number followed by either cm or in:
 ;If cm, the number must be at least 150 and at most 193.
 ;If in, the number must be at least 59 and at most 76.
-
 (deftest valid-height?-test
   (is (= true (valid-height? "hgt:170cm")))
   (is (= false (valid-height? "hgt:194cm")))
   (is (= true (valid-height? "hgt:70in")))
   (is (= false (valid-height? "hgt:77in")))
   (is (= false (valid-height? "hgt:70xy")))
+  )
+
+;hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+(deftest valid-hair-color?-test
+  (is (= true (valid-hair-color? "hcl:#123456")))
+  (is (= true (valid-hair-color? "hcl:#12ac56")))
+  (is (= false (valid-hair-color? "hcl:#12gh56")))
+  )
+
+;pid (Passport ID) - a nine-digit number, including leading zeroes
+(deftest valid-passport-id?-test
+  (is (= true (valid-passport-id? "pid:123456789")))
+  (is (= true (valid-passport-id? "pid:000000000")))
+  (is (= false (valid-passport-id? "pid:12345678")))
+  (is (= false (valid-passport-id? "pid:a23456789")))
   )

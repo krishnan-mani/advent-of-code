@@ -50,7 +50,10 @@
     ))
 
 (defn valid-hair-color? [_string]
-  true)
+  (let [hair-color (last (str/split _string #":"))]
+    (and (= 7 (count hair-color))
+         (boolean (re-find #"#[0-9a-f]{6}" hair-color)))
+    ))
 
 (def valid-eye-colors #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"})
 (defn valid-eye-color? [_string]
@@ -58,7 +61,10 @@
     (contains? valid-eye-colors eye-color)))
 
 (defn valid-passport-id? [_string]
-  true)
+  (let [passport-id (last (str/split _string #":"))]
+    (and (= 9 (count passport-id))
+         (boolean (re-find #"[\d]{9}" passport-id)))
+    ))
 
 (defn valid-country-id? [_string]
   true)
