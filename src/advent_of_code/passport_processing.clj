@@ -19,20 +19,23 @@
 (defn basically-valid-passport? [_passport]
   (has-required-fields? _passport))
 
+(defn valid-year? [year no-earlier-than no-later-than]
+  (and (<= no-earlier-than year) (<= year no-later-than)))
+
 (defn valid-birth-year? [_string]
   (let [birth-year (read-string (last (str/split _string #":")))]
-    (and (<= 1920 birth-year)
-         (<= birth-year 2002)))
+    (valid-year? birth-year 1920 2002))
   )
 
 (defn valid-issue-year? [_string]
   (let [issue-year (read-string (last (str/split _string #":")))]
-    (and (<= 2010 issue-year)
-         (<= issue-year 2020)))
+    (valid-year? issue-year 2010 2020))
   )
 
 (defn valid-expiration-year? [_string]
-  true)
+  (let [expiration-year (read-string (last (str/split _string #":")))]
+    (valid-year? expiration-year 2020 2030))
+  )
 
 (defn valid-height? [_string]
   true)
@@ -40,8 +43,10 @@
 (defn valid-hair-color? [_string]
   true)
 
+(def valid-eye-colors #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"})
 (defn valid-eye-color? [_string]
-  true)
+  (let [eye-color (last (str/split _string #":"))]
+    (contains? valid-eye-colors eye-color)))
 
 (defn valid-passport-id? [_string]
   true)

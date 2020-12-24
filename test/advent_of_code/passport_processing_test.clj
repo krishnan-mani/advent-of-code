@@ -55,3 +55,13 @@
   (is (= true (valid-issue-year? "iyr:2012")))
   (is (= false (valid-issue-year? "iyr:2022")))
   )
+
+(deftest valid-expiration-year?-test
+  (is (= true (valid-expiration-year? "iyr:2020")))
+  (is (= false (valid-expiration-year? "iyr:2032")))
+  )
+
+(deftest valid-eye-color?-test
+  (is (= true (valid-eye-color? "ecl:amb")))
+  (is (= false (valid-eye-color? "ecl:foo")))
+  )
