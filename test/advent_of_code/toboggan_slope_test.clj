@@ -20,9 +20,13 @@
   (is (= "#" (landed-on "...#..#.##..#.#......#.#.#.#..#" 34)))
   )
 
+(deftest next-position-test
+  (is (= {:y 1 :x 1} (next-position {:y 0 :x 0} 1 1)))
+  )
+
 (deftest jump-test
-  (is (= {:y 1 :x 3} (right-3-down-1 0)))
-  (is (= {:y 2 :x 6} (right-3-down-1 1)))
+  (is (= {:y 1 :x 3} (right-3-down-1 {:y 0 :x 0})))
+  (is (= {:y 2 :x 6} (right-3-down-1 {:y 1 :x 3})))
   )
 
 (deftest bin-truth-test
@@ -30,7 +34,13 @@
   (is (= 0 (bin-truth false)))
   )
 
-(def small-grid-test {:1 [
+(def small-grid-test {:0 [
+                          "........."
+                          "........."
+                          "........."
+                          "........."
+                          ]
+                      :1 [
                           "........."
                           "...#....."
                           ]
@@ -47,7 +57,8 @@
                           ]}
   )
 
-(deftest navigate-test
+(deftest count-trees-for-slope-test
+  (is (= 0 (count-trees-for-slope right-3-down-1 (:0 small-grid-test))))
   (is (= 1 (count-trees-for-slope right-3-down-1 (:1 small-grid-test))))
   (is (= 2 (count-trees-for-slope right-3-down-1 (:2 small-grid-test))))
   (is (= 3 (count-trees-for-slope right-3-down-1 (:3 small-grid-test))))

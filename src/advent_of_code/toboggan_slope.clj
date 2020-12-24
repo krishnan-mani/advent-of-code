@@ -14,14 +14,14 @@
   (= "#" (landed-on line idx))
   )
 
-(defn next-position [y right down]
-  (let [next-y (+ down y)]
-    {:y next-y :x (* right next-y)}
+(defn next-position [co-ords right down]
+  (let [{:keys [y x]} co-ords]
+    {:y (+ y down) :x (+ x right)}
     )
   )
 
-(defn right-3-down-1 [y]
-  (next-position y 3 1)
+(defn right-3-down-1 [co-ords]
+  (next-position co-ords 3 1)
   )
 
 (defn bin-truth [_boolean]
@@ -31,12 +31,12 @@
   (let [_length (dec (count basic_grid))]
     (loop [idx 0
            trees 0
-           {:keys [y x]} (slope-fn idx)]
+           {:keys [y x]} (slope-fn {:y 0 :x 0})]
       (if-not (and (< idx _length) (<= y _length))
         trees
         (recur (inc idx)
                (+ trees (bin-truth (landed_on_tree? (nth basic_grid y) x)))
-               (slope-fn (inc idx))))
+               (slope-fn {:y y :x x})))
       ))
   )
 
