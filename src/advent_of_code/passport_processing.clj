@@ -37,8 +37,17 @@
     (valid-year? expiration-year 2020 2030))
   )
 
+(defn within-range? [num no-less-than no-more-than]
+  (and (<= no-less-than num)
+       (<= num no-more-than)))
+
 (defn valid-height? [_string]
-  true)
+  (let [height (last (str/split _string #":"))
+        num (read-string (re-find #"[\d]*" height))]
+    (or (if (.endsWith height "cm") (within-range? num 150 193))
+        (if (.endsWith height "in") (within-range? num 59 76))
+        false)
+    ))
 
 (defn valid-hair-color? [_string]
   true)
@@ -55,7 +64,8 @@
   true)
 
 (def validations-by-field
-  {"byr" valid-birth-year?
+  {
+   "byr" valid-birth-year?
    "iyr" valid-issue-year?
    "eyr" valid-expiration-year?
    "hgt" valid-height?

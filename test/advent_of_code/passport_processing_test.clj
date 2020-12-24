@@ -65,3 +65,16 @@
   (is (= true (valid-eye-color? "ecl:amb")))
   (is (= false (valid-eye-color? "ecl:foo")))
   )
+
+
+;hgt (Height) - a number followed by either cm or in:
+;If cm, the number must be at least 150 and at most 193.
+;If in, the number must be at least 59 and at most 76.
+
+(deftest valid-height?-test
+  (is (= true (valid-height? "hgt:170cm")))
+  (is (= false (valid-height? "hgt:194cm")))
+  (is (= true (valid-height? "hgt:70in")))
+  (is (= false (valid-height? "hgt:77in")))
+  (is (= false (valid-height? "hgt:70xy")))
+  )
