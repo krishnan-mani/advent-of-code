@@ -69,21 +69,24 @@
 (defn valid-country-id? [_string]
   true)
 
-(def validations-by-field
-  {
-   "byr" valid-birth-year?
-   "iyr" valid-issue-year?
-   "eyr" valid-expiration-year?
-   "hgt" valid-height?
-   "hcl" valid-hair-color?
-   "ecl" valid-eye-color?
-   "pid" valid-passport-id?
-   "cid" valid-country-id?
-   })
+(defn validations-by-field [_string]
+  (let [validations {
+                     "byr" valid-birth-year?
+                     "iyr" valid-issue-year?
+                     "eyr" valid-expiration-year?
+                     "hgt" valid-height?
+                     "hcl" valid-hair-color?
+                     "ecl" valid-eye-color?
+                     "pid" valid-passport-id?
+                     "cid" valid-country-id?
+                     }
+        key (first (str/split _string #":"))
+        ]
+    ((get validations key) _string))
+  )
 
 (defn valid-data-items? [_passport]
-  (every? #(get validations-by-field (first (str/split % #":"))) (get-data-items _passport))
-  )
+  (every? #(validations-by-field %) (get-data-items _passport)))
 
 (defn fully-valid-passport? [_passport]
   (and (basically-valid-passport? _passport)
