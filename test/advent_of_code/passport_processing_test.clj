@@ -47,6 +47,6 @@
   )
 
 (deftest valid-birth-year?-test
-  (is (= true (valid-birth-year? "2002")))
-  (is (= false (valid-birth-year? "2003")))
+  (is (= true (valid-birth-year? "byr:2002")))
+  (is (= false (valid-birth-year? "byr:2003")))
   )

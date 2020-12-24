@@ -20,13 +20,45 @@
   (has-required-fields? _passport))
 
 (defn valid-birth-year? [_string]
-  (let [birth-year (read-string _string)]
+  (let [birth-year (read-string (last (str/split _string #":")))]
     (and (<= 1920 birth-year)
          (<= birth-year 2002)))
   )
 
+(defn valid-issue-year? [_string]
+  true)
+
+(defn valid-expiration-year? [_string]
+  true)
+
+(defn valid-height? [_string]
+  true)
+
+(defn valid-hair-color? [_string]
+  true)
+
+(defn valid-eye-color? [_string]
+  true)
+
+(defn valid-passport-id? [_string]
+  true)
+
+(defn valid-country-id? [_string]
+  true)
+
+(def validations-by-field
+  {"byr" valid-birth-year?
+   "iyr" valid-issue-year?
+   "eyr" valid-expiration-year?
+   "hgt" valid-height?
+   "hcl" valid-hair-color?
+   "ecl" valid-eye-color?
+   "pid" valid-passport-id?
+   "cid" valid-country-id?
+   })
+
 (defn valid-data-items? [_passport]
-  false
+  (every? #(get validations-by-field (first (str/split % #":"))) (get-data-items _passport))
   )
 
 (defn fully-valid-passport? [_passport]
