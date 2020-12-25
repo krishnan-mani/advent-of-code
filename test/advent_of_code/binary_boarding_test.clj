@@ -12,11 +12,11 @@
 ;F keeps rows 44 through 45.
 ;The final F keeps the lower of the two, row 44.
 
-(deftest get-rows-test
-  (is (= [0 63] (get-rows "F")))
-  (is (= [32 63] (get-rows "FB")))
-  (is (= [32 47] (get-rows "FBF")))
-  (is (= [44 44] (get-rows "FBFBBFF")))
+(deftest bisect-by-identifier-test
+  (is (= [0 63] (bisect-by-identifier "F" [0 127])))
+  (is (= [32 63] (bisect-by-identifier "FB" [0 127])))
+  (is (= [32 47] (bisect-by-identifier "FBF" [0 127])))
+  (is (= [44 44] (bisect-by-identifier "FBFBBFF" [0 127])))
   )
 
 (deftest bisect-test
@@ -34,4 +34,23 @@
 (deftest bisect-and-lower-test
   (is (= [0 63] (bisect-and-lower [0 127])))
   (is (= [32 47] (bisect-and-lower [32 63])))
+  )
+
+(deftest bisect-and-choose-range-test
+  (is (= [0 63] (bisect-and-choose-range [0 127] "F")))
+  (is (= [0 63] (bisect-and-choose-range [0 127] "L")))
+  (is (= [64 127] (bisect-and-choose-range [0 127] "B")))
+  (is (= [64 127] (bisect-and-choose-range [0 127] "R")))
+  )
+
+(deftest get-rows-test
+  (is (= 44 (get-rows "FBFBBFFRLR")))
+  )
+
+(deftest get-columns-test
+  (is (= 5 (get-columns "FBFBBFFRLR")))
+  )
+
+(deftest seat-id-test
+  (is (= 357 (seat-id "FBFBBFFRLR")))
   )
