@@ -54,3 +54,9 @@
 (deftest seat-id-test
   (is (= 357 (seat-id "FBFBBFFRLR")))
   )
+
+(deftest find-missing-num-test
+  (is (= 3 (find-missing-num [1 2 4])))
+  (is (= 6 (find-missing-num [2 3 4 5 7])))
+  (is (= 5 (find-missing-num [7 4 6])))
+  )

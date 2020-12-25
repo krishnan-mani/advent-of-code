@@ -30,8 +30,6 @@
       (bisect-and-lower range))
     ))
 
-
-
 (defn bisect-by-identifier [_string start-range]
   (loop [idx 0
          range start-range]
@@ -56,3 +54,24 @@
 
 (defn seat-id [_boarding-pass]
   (+ (* 8 (get-rows _boarding-pass)) (get-columns _boarding-pass)))
+
+(def boarding-passes
+  (str/split-lines (slurp "test/resources/boarding_passes.txt")))
+
+(defn find-missing-num [_nums]
+  (let [sorted-nums (sort _nums)
+        lower-bound (first sorted-nums)]
+    (loop [idx 0
+           num (nth sorted-nums idx)]
+      (if-not (= (+ idx lower-bound) num)
+        (+ idx lower-bound)
+        (recur (inc idx) (nth _nums (inc idx))))
+      )
+    ))
+
+(defn -main [& args]
+  (println "Highest seat ID on a boarding pass:"
+           (apply max (map seat-id boarding-passes)))
+  (println "Seat ID missing in boarding passes:"
+           (find-missing-num (map seat-id boarding-passes)))
+  )
