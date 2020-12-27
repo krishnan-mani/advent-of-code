@@ -11,7 +11,7 @@
            unique-responses #{}]
       (if-not (< idx length)
         (count unique-responses)
-        (recur (inc idx) (set (cons (nth _string idx) unique-responses))))))
+        (recur (inc idx) (conj unique-responses #{(nth _string idx)})))))
   )
 
 (defn read-customs-forms-responses [filename]
