@@ -58,16 +58,21 @@
 (def boarding-passes
   (str/split-lines (slurp "test/resources/boarding_passes.txt")))
 
+
+(defn missing-next-int? [coll num]
+  (nil? (some #{(inc num)} coll)))
+
 (defn find-missing-num [_nums]
-  (let [sorted-nums (sort _nums)
-        lower-bound (first sorted-nums)]
-    (loop [idx 0
-           num (nth sorted-nums idx)]
-      (if-not (= (+ idx lower-bound) num)
-        (+ idx lower-bound)
-        (recur (inc idx) (nth _nums (inc idx))))
-      )
-    ))
+  (let [length (count _nums)
+        sorted-nums (sort _nums)]
+    (loop [idx 0]
+      (if (< idx length)
+        (let [num (nth sorted-nums idx)]
+          (if (missing-next-int? sorted-nums num)
+            (inc num)
+            (recur (inc idx)))))
+      ))
+  )
 
 (defn -main [& args]
   (println "Highest seat ID on a boarding pass:"

@@ -57,6 +57,9 @@
 
 (deftest find-missing-num-test
   (is (= 3 (find-missing-num [1 2 4])))
-  (is (= 6 (find-missing-num [2 3 4 5 7])))
-  (is (= 5 (find-missing-num [7 4 6])))
+  )
+
+(deftest missing-next-int?-test
+  (is (= true (missing-next-int? [1 3] 1)))
+  (is (= false (missing-next-int? [1 3] 2)))
   )

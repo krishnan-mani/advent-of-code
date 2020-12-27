@@ -930,4 +930,8 @@ BFFBFBBLLR
 FBFBBFFRRL
 BBFBFBBLLR
 BFFFFFBLLL
+<<<<<<< HEAD
 BFFBBFFLLR
+=======
+BFFBBFFLLR
+>>>>>>> 6a66fb7 (solved binary boarding problems)
