@@ -10,3 +10,10 @@
   (is (= 1 (count-yes "b")))
   )
 
+(deftest count-common-test
+  (is (= 0 (count-common "")))
+  (is (= 0 (count-common "a\nb\nc")))
+  (is (= 3 (count-common "abc")))
+  (is (= 1 (count-common "ab\nac")))
+  (is (= 1 (count-common "a\na\na\na")))
+  )
