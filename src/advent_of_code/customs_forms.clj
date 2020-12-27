@@ -11,8 +11,12 @@
            unique-responses #{}]
       (if-not (< idx length)
         (count unique-responses)
-        (do (println _string unique-responses)
-            (recur (inc idx) (set (cons (nth _string idx) unique-responses)))))
-      )
-    )
+        (recur (inc idx) (set (cons (nth _string idx) unique-responses))))))
   )
+
+(defn read-customs-forms-responses [filename]
+  (str/split (slurp filename) #"\n\n"))
+
+(def customs-forms-responses (read-customs-forms-responses "test/resources/customs_forms_responses.txt"))
+(defn -main [& args]
+  (println "Sum of counts of customs forms group responses:" (reduce + (map count-yes customs-forms-responses))))
