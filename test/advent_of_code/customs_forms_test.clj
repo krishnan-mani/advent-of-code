@@ -17,3 +17,10 @@
   (is (= 1 (count-common "ab\nac")))
   (is (= 1 (count-common "a\na\na\na")))
   )
+
+(deftest count-common-acc-test
+  (is (= 7 (count-common "lagwjpd\ndpglwja\nqgdawplj")))
+  (is (= 1 (count-common "gw\nbg\ng")))
+  (is (= 0 (count-common "dlfbyscp\noruaxtg\nrowqu\ngze\ni")))
+  (is (= 0 (count-common "rbwdsfcgute\noa\nlqizp\nkxvjyz")))
+  )

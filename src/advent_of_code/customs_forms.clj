@@ -5,24 +5,10 @@
 (defn newline? [chr]
   (= chr \newline))
 
-(defn count-common [_responses]
-  (let [responses (str/split-lines _responses)
-        _partitions (partition 2 1 responses)
-        length (count _partitions)]
-    (if (> (count responses) 1)
-      (loop [idx 0
-             common #{}]
-        (if-not (< idx length)
-          (count common)
-          (recur (inc idx)
-                 (let [_part (nth _partitions idx)]
-                   (set/intersection (set (first _part)) (set (last _part)))))
-          )
-        )
-      (if (= (count responses) 1)
-        (count (set (first responses)))
-        0)
-      ))
+
+(defn count-common [group-responses]
+  (let [responses (map set (str/split-lines group-responses))]
+    (count (apply set/intersection responses)))
   )
 
 (defn count-yes [_responses]
@@ -40,4 +26,6 @@
 
 (def customs-forms-responses (read-customs-forms-responses "test/resources/customs_forms_responses.txt"))
 (defn -main [& args]
-  (println "Sum of counts of customs forms group responses:" (reduce + (map count-yes customs-forms-responses))))
+  (println "Sum of counts of customs forms group responses:" (reduce + (map count-yes customs-forms-responses)))
+  (println "Sum of common responses within groups:" (reduce + (map count-common customs-forms-responses)))
+  )
