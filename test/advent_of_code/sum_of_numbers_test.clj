@@ -1,5 +1,6 @@
 (ns advent-of-code.sum-of-numbers-test
   (:require [clojure.test :refer :all])
+  (:require [clojure.string :as str])
   (:require [advent-of-code.sum-of-numbers :refer :all]))
 
 (deftest find-two-numbers-acceptance-test
@@ -10,4 +11,9 @@
 (deftest find-three-numbers-acceptance-test
   (is (= [1488 60 472] (find-three-numbers sum numbers)))
   (is (= 42140160 (reduce * (find-three-numbers sum numbers))))
+  )
+
+(def my-lazy-seq-ints (map read-string (str/split "1\n2\n3" #"\n")))
+(deftest lazy-contains?-test
+  (is (= true (lazy-contains? my-lazy-seq-ints 1)))
   )

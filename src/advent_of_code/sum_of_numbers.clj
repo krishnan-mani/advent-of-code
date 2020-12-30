@@ -4,9 +4,8 @@
 (defn read-numbers-from-file [filename]
   (map read-string (str/split (slurp filename) #"\n")))
 
-(defn lazy-contains?
-  [coll key]
-  (boolean (some #(= % key) coll)))
+(defn lazy-contains? [coll key]
+  (boolean (some #{key} coll)))
 
 (defn find-two-numbers
   [sum numbers]
