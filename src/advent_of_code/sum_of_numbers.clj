@@ -7,18 +7,17 @@
 (defn lazy-contains? [coll key]
   (boolean (some #{key} coll)))
 
-(defn find-two-numbers
-  [sum numbers]
+(defn find-two-numbers [sum numbers]
   (filter #(lazy-contains? numbers (- sum %)) numbers))
 
-(defn find-three-numbers
-  [sum numbers]
+(defn find-three-numbers [sum numbers]
   (loop [idx 0
-         num (nth numbers idx)
+         first-number (nth numbers idx)
          tail (rest numbers)]
-    (if (not-empty (find-two-numbers (- sum num) tail))
-      (flatten (list num (find-two-numbers (- sum num) tail)))
-      (recur (inc idx) (nth numbers idx) (rest numbers)))))
+    (if (not-empty (find-two-numbers (- sum first-number) tail))
+      (let [[second-number third-number] (find-two-numbers (- sum first-number) tail)]
+        (list first-number second-number third-number))
+      (recur (inc idx) (nth numbers idx) (rest tail)))))
 
 (def sum 2020)
 (def filename "test/resources/sum_to_2020.txt")
