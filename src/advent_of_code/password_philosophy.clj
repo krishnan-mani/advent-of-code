@@ -32,10 +32,10 @@
   (loop [idx (dec (count _string))
          ans 0]
     (if-not (>= idx 0)
-      (+ 0 ans)
+      ans
       (recur
         (dec idx)
-        (if (= chr (subs _string idx (inc idx))) (inc ans) (+ 0 ans))))))
+        (if (= chr (subs _string idx (inc idx))) (inc ans) ans)))))
 
 (defn valid-by-occurrence? [password min max chr]
   (let [occurrences (occurrences password chr)]
