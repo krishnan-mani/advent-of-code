@@ -16,4 +16,5 @@
 (def my-lazy-seq-ints (map read-string (str/split "1\n2\n3" #"\n")))
 (deftest lazy-contains?-test
   (is (= true (lazy-contains? my-lazy-seq-ints 1)))
+  (is (= false (lazy-contains? my-lazy-seq-ints 0)))
   )
