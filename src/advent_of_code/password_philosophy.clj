@@ -65,9 +65,9 @@
 (defn occurs? [coll elm]
   (if (some #{elm} coll) 1 0))
 
-(defn valid-by-position? [password first last chr]
+(defn valid-by-position? [password first-position last-position chr]
   (let [positions (get-positions password chr)]
-    (= 1 (+ (occurs? positions first) (occurs? positions last)))))
+    (= 1 (+ (occurs? positions first-position) (occurs? positions last-position)))))
 
 (defn read-password-line-with-positions [_line]
   {:first    (min-occurrences _line)
