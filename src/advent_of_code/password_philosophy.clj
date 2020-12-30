@@ -23,8 +23,7 @@
   {:min      (min-occurrences _line)
    :max      (max-occurrences _line)
    :chr      (char-to-check _line)
-   :password (get-password _line)}
-  )
+   :password (get-password _line)})
 
 (defn read-passwords-from-file [f filename]
   (map f (str/split-lines (slurp filename))))
@@ -61,13 +60,10 @@
         (recur (inc idx) (if (= chr (subs _string idx (inc idx)))
                            (cons (inc idx) positions)
                            (list positions))))
-      ))
-  )
+      )))
 
 (defn occurs? [coll elm]
-  (if (some #(= elm %) coll)
-    1
-    0))
+  (if (some #{elm} coll) 1 0))
 
 (defn valid-by-position? [password first last chr]
   (let [positions (get-positions password chr)]
@@ -77,16 +73,14 @@
   {:first    (min-occurrences _line)
    :last     (max-occurrences _line)
    :chr      (char-to-check _line)
-   :password (get-password _line)}
-  )
+   :password (get-password _line)})
 
 (defn valid-password-line-by-position? [_password_line]
   (let [password (:password _password_line)
         first (:first _password_line)
         last (:last _password_line)
         chr (:chr _password_line)]
-    (valid-by-position? password first last chr))
-  )
+    (valid-by-position? password first last chr)))
 
 (defn count-true [pred coll]
   (count (filter identity (map pred coll))))
