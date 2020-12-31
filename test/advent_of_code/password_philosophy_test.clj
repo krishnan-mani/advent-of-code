@@ -63,3 +63,14 @@
   (is (= false (valid-by-position? "cdefg" 1 3 "b")))
   (is (= false (valid-by-position? "ccccccccc" 2 9 "b")))
   )
+
+(deftest occurs?-test
+  (is (= 1 (occurs? [33 37] 33)))
+  (is (= 0 (occurs? [33 37] 39)))
+  )
+
+(deftest count-true-test
+  (is (= 1 (count-true even? [2 3])))
+  (is (= 2 (count-true even? [2 3 4])))
+  (is (= 0 (count-true even? [1 3])))
+  )
