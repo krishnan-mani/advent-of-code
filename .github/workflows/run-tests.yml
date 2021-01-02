@@ -17,3 +17,7 @@ jobs:
       run: lein deps
     - name: Run tests
       run: lein test
+    - name: Get test coverage
+      run: lein cloverage --codecov 
+    - name: Uploda test coverage
+      run: bash <(curl -s https://codecov.io/bash) -f target/coverage/codecov.json
