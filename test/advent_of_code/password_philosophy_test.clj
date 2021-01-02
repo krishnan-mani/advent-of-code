@@ -2,7 +2,6 @@
   (:require [clojure.test :refer :all])
   (:require [advent-of-code.password-philosophy :refer :all]))
 
-
 (deftest occurrences-test
   (is (= 0 (occurrences "" "a")))
   (is (= 0 (occurrences "b" "a")))
@@ -40,12 +39,13 @@
   (is (= true (valid-password-line-by-occurrence? {:min 1, :max 13, :chr "r", :password "gqdrspndrpsrjfjx"})))
   )
 
-(deftest valid?-test
-  (is (= true (valid-by-occurrence? "abc" 1 2 "a")))
-  (is (= false (valid-by-occurrence? "cbc" 1 2 "a")))
-  (is (= true (valid-by-occurrence? "cbc" 0 2 "a")))
-  (is (= false (valid-by-occurrence? "vjkxbrfwnj" 2 6 "x")))
-  )
+(deftest valid-by-occurrence?-test
+  (testing "Testing password validity by number of occurrences"
+    (is (= true (valid-by-occurrence? "abc" 1 2 "a")))
+    (is (= false (valid-by-occurrence? "cbc" 1 2 "a")))
+    (is (= true (valid-by-occurrence? "cbc" 0 2 "a")))
+    (is (= false (valid-by-occurrence? "vjkxbrfwnj" 2 6 "x")))
+    ))
 
 (deftest read-password-line-with-positions-test
   (is (= {:first 1 :last 13 :chr "r" :password "gqdrspndrpsrjfjx"} (read-password-line-with-positions "1-13 r: gqdrspndrpsrjfjx")))
