@@ -2,7 +2,11 @@
   (:require [clojure.string :as str]))
 
 (defn first-before-delimiter [_string _delimiter]
-  (first (str/split _string (re-pattern _delimiter))))
+  (let [pattern (re-pattern _delimiter)]
+    (-> _string
+        (str/split pattern)
+        (first)))
+  )
 
 (defn last-after-delimiter [_string _delimiter]
   (last (str/split _string (re-pattern _delimiter))))
