@@ -4,6 +4,7 @@
 
 (deftest landed-on-tree?-test
   (is (= true (landed_on_tree? ".#.#" 3)))
+  (is (= false (landed_on_tree? ".#.#" 2)))
   )
 
 (deftest landed-on-test
@@ -22,6 +23,9 @@
 
 (deftest next-position-test
   (is (= {:y 1 :x 1} (next-position {:y 0 :x 0} 1 1)))
+  (is (= {:y 2 :x 1} (next-position {:y 0 :x 0} 1 2)))
+  (is (= {:y 4 :x 2} (next-position {:y 2 :x 1} 1 2)))
+  (is (= {:y 4 :x 3} (next-position {:y 2 :x 1} 2 2)))
   )
 
 (deftest jump-test
