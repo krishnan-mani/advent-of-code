@@ -79,3 +79,8 @@
   (is (= "a" (first-before-delimiter "a b c" " ")))
   (is (= "a b" (first-before-delimiter "a b\tc" "\t")))
   )
+
+(deftest last-after-delimiter-test
+  (is (= "c" (last-after-delimiter "a b c" " ")))
+  (is (= "cd" (last-after-delimiter "a b\ncd" "\n")))
+  )
