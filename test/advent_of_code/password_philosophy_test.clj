@@ -74,3 +74,8 @@
   (is (= 2 (count-true even? [2 3 4])))
   (is (= 0 (count-true even? [1 3])))
   )
+
+(deftest first-before-delimiter-test
+  (is (= "a" (first-before-delimiter "a b c" " ")))
+  (is (= "a b" (first-before-delimiter "a b\tc" "\t")))
+  )
