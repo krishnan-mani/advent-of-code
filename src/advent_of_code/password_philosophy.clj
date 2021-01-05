@@ -5,23 +5,36 @@
   (let [pattern (re-pattern _delimiter)]
     (-> _string
         (str/split pattern)
-        (first)))
-  )
+        (first))))
 
 (defn last-after-delimiter [_string _delimiter]
-  (last (str/split _string (re-pattern _delimiter))))
+  (let [pattern (re-pattern _delimiter)]
+    (-> _string
+        (str/split pattern)
+        (last))))
 
 (defn min-occurrences [_string]
-  (read-string (first-before-delimiter _string "-")))
+  (-> _string
+      (first-before-delimiter "-")
+      (read-string)))
 
 (defn max-occurrences [_string]
-  (read-string (last-after-delimiter (first-before-delimiter _string " ") "-")))
+  (-> _string
+      (first-before-delimiter " ")
+      (last-after-delimiter "-")
+      (read-string)))
 
 (defn char-to-check [_string]
-  (last-after-delimiter (first-before-delimiter _string ":") " "))
+  (-> _string
+      (first-before-delimiter ":")
+      (last-after-delimiter " "))
+  )
 
 (defn get-password [_string]
-  (str/trim (last-after-delimiter _string ":")))
+  (-> _string
+      (last-after-delimiter ":")
+      (str/trim))
+  )
 
 (defn read-password-line-with-occurrences [_line]
   {:min      (min-occurrences _line)
