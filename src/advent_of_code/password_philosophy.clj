@@ -106,11 +106,15 @@
 (defn count-true [pred coll]
   (count (filter identity (map pred coll))))
 
+(defn count-valid-passwords-old-job [filename]
+  (let [password-lines-by-occurrence (read-passwords-from-file read-password-line-with-occurrences filename)]
+    (count-true valid-password-line-by-occurrence? password-lines-by-occurrence)
+    )
+  )
+
 (defn -main [& args]
   (println "Number of valid passwords (old job):"
-           (let [password-lines-by-occurrence (read-passwords-from-file read-password-line-with-occurrences "test/resources/password_policies.txt")]
-             (count-true valid-password-line-by-occurrence? password-lines-by-occurrence)
-             ))
+           (count-valid-passwords-old-job "test/resources/password_policies.txt"))
 
   (println "Number of valid passwords (by position):"
            (let [password-lines-by-position (read-passwords-from-file read-password-line-with-positions "test/resources/password_policies.txt")]

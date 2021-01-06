@@ -84,3 +84,7 @@
   (is (= "c" (last-after-delimiter "a b c" " ")))
   (is (= "cd" (last-after-delimiter "a b\ncd" "\n")))
   )
+
+(deftest count-valid-passwords-old-job-test
+  (is (= 600 (count-valid-passwords-old-job "test/resources/password_policies.txt")))
+  )
