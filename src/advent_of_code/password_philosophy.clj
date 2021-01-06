@@ -49,12 +49,11 @@
   (let [length (count _string)]
     (if (zero? length)
       0
-      (if (= 1 length)
-        (if (= chr (subs _string 0 1)) 1 0)
-        (+ (occurrences (subs _string 0 1) chr) (occurrences (subs _string 1) chr)))
-      )
-    )
-  )
+      (let [first_chr (subs _string 0 1)
+            rest_string (subs _string 1)]
+        (if (= 1 length)
+          (if (= chr first_chr) 1 0)
+          (+ (occurrences first_chr chr) (occurrences rest_string chr)))))))
 
 (defn valid-by-occurrence? [password min max chr]
   (let [occurrences (occurrences password chr)]
@@ -71,15 +70,15 @@
     (valid-by-occurrence? password min max chr)))
 
 (defn get-positions [_string chr]
-  (let [_length (count _string)]
+  (let [length (count _string)]
     (loop [idx 0
-           positions '()]
-      (if-not (< idx _length)
-        (sort (flatten positions))
-        (recur (inc idx) (if (= chr (subs _string idx (inc idx)))
-                           (cons (inc idx) positions)
-                           (list positions))))
-      )))
+           pos (range 0 length 1)]
+      (if-not (< idx length)
+        (map inc pos)
+        (recur (inc idx)
+               (if (= chr (subs _string idx (inc idx)))
+                 pos
+                 (remove #{idx} pos)))))))
 
 (defn occurs? [coll elm]
   (if (some #{elm} coll) 1 0))
