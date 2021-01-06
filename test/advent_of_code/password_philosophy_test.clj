@@ -88,3 +88,7 @@
 (deftest count-valid-passwords-old-job-test
   (is (= 600 (count-valid-passwords-old-job "test/resources/password_policies.txt")))
   )
+
+(deftest count-valid-passwords-by-position-test
+  (is (= 245 (count-valid-passwords-by-position "test/resources/password_policies.txt")))
+  )

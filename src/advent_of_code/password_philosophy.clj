@@ -112,12 +112,15 @@
     )
   )
 
+(defn count-valid-passwords-by-position [filename]
+  (let [password-lines-by-position (read-passwords-from-file read-password-line-with-positions "test/resources/password_policies.txt")]
+    (count-true valid-password-line-by-position? password-lines-by-position)
+    ))
+
 (defn -main [& args]
   (println "Number of valid passwords (old job):"
            (count-valid-passwords-old-job "test/resources/password_policies.txt"))
 
   (println "Number of valid passwords (by position):"
-           (let [password-lines-by-position (read-passwords-from-file read-password-line-with-positions "test/resources/password_policies.txt")]
-             (count-true valid-password-line-by-position? password-lines-by-position)
-             ))
+           (count-valid-passwords-by-position "test/resources/password_policies.txt"))
   )
