@@ -81,7 +81,10 @@
                  (remove #{idx} pos)))))))
 
 (defn occurs? [coll elm]
-  (if (some #{elm} coll) 1 0))
+  (let [truth-set {true 1 false 0}]
+    (truth-set (boolean (some #{elm} coll)))
+    )
+  )
 
 (defn valid-by-position? [password first-position last-position chr]
   (let [positions (get-positions password chr)]
