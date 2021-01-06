@@ -39,8 +39,8 @@
 
 (deftest has-required-fields?-test
   (is (= true (has-required-fields? valid-test-passport)))
+  (is (= false (has-required-fields? invalid-test-passport)))
   )
-
 
 (def invalid-full-test-passports
   {

@@ -3,18 +3,19 @@
 
 (def optional-fields #{"cid"})
 (def required-fields #{"byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid"})
+(def colon-pattern #":")
 
 (defn get-data-items [_passport]
-  (str/split _passport #"[ \n]")
-  )
+  (str/split _passport #"[ \n]"))
 
 (defn get-fields [_passport-data]
-  (map #(first (str/split % #":")) _passport-data)
+  (map #(-> % (str/split,,, colon-pattern) (first)) _passport-data)
   )
 
 (defn has-required-fields? [_passport]
-  (every? (set (remove optional-fields (get-fields (get-data-items _passport)))) required-fields)
-  )
+  (let [passport-data-fields (get-fields (get-data-items _passport))
+        optional-fields-removed (remove optional-fields passport-data-fields)]
+    (every? (set optional-fields-removed) required-fields)))
 
 (defn basically-valid-passport? [_passport]
   (has-required-fields? _passport))
@@ -50,14 +51,14 @@
     ))
 
 (defn valid-hair-color? [_string]
-  (let [hair-color (last (str/split _string #":"))]
+  (let [hair-color (-> _string (str/split,,, #":") (last))]
     (and (= 7 (count hair-color))
          (boolean (re-find #"#[0-9a-f]{6}" hair-color)))
     ))
 
 (def valid-eye-colors #{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"})
 (defn valid-eye-color? [_string]
-  (let [eye-color (last (str/split _string #":"))]
+  (let [eye-color (-> _string (str/split,,, #":") (last))]
     (contains? valid-eye-colors eye-color)))
 
 (defn valid-passport-id? [_string]
