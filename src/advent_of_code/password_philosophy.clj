@@ -80,7 +80,7 @@
                  pos
                  (remove #{idx} pos)))))))
 
-(defn occurs? [coll elm]
+(defn bin-contains? [coll elm]
   (let [truth-set {true 1 false 0}]
     (truth-set (boolean (some #{elm} coll)))
     )
@@ -88,7 +88,7 @@
 
 (defn valid-by-position? [password first-position last-position chr]
   (let [positions (get-positions password chr)]
-    (= 1 (+ (occurs? positions first-position) (occurs? positions last-position)))))
+    (= 1 (+ (bin-contains? positions first-position) (bin-contains? positions last-position)))))
 
 (defn read-password-line-with-positions [_line]
   {:first    (min-occurrences _line)

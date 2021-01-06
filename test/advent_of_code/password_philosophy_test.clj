@@ -64,9 +64,9 @@
   (is (= false (valid-by-position? "ccccccccc" 2 9 "b")))
   )
 
-(deftest occurs?-test
-  (is (= 1 (occurs? [33 37] 33)))
-  (is (= 0 (occurs? [33 37] 39)))
+(deftest bin-contains?-test
+  (is (= 1 (bin-contains? [33 37] 33)))
+  (is (= 0 (bin-contains? [33 37] 39)))
   )
 
 (deftest count-true-test
