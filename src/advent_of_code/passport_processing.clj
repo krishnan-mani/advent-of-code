@@ -24,17 +24,17 @@
   (and (<= no-earlier-than year) (<= year no-later-than)))
 
 (defn valid-birth-year? [_string]
-  (let [birth-year (read-string (last (str/split _string #":")))]
+  (let [birth-year (-> _string (str/split,,, colon-pattern) (last) (read-string))]
     (valid-year? birth-year 1920 2002))
   )
 
 (defn valid-issue-year? [_string]
-  (let [issue-year (read-string (last (str/split _string #":")))]
+  (let [issue-year (-> _string (str/split,,, colon-pattern) (last) (read-string))]
     (valid-year? issue-year 2010 2020))
   )
 
 (defn valid-expiration-year? [_string]
-  (let [expiration-year (read-string (last (str/split _string #":")))]
+  (let [expiration-year (-> _string (str/split,,, colon-pattern) (last) (read-string))]
     (valid-year? expiration-year 2020 2030))
   )
 
