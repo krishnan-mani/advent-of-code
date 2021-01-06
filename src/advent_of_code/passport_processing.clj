@@ -9,8 +9,7 @@
   (str/split _passport #"[ \n]"))
 
 (defn get-fields [_passport-data]
-  (map #(-> % (str/split,,, colon-pattern) (first)) _passport-data)
-  )
+  (map #(-> % (str/split,,, colon-pattern) (first)) _passport-data))
 
 (defn has-required-fields? [_passport]
   (let [passport-data-fields (get-fields (get-data-items _passport))
@@ -43,7 +42,7 @@
        (<= num no-more-than)))
 
 (defn valid-height? [_string]
-  (let [height (last (str/split _string #":"))
+  (let [height (-> _string (str/split colon-pattern) (last))
         num (read-string (re-find #"[\d]*" height))]
     (or (if (.endsWith height "cm") (within-range? num 150 193))
         (if (.endsWith height "in") (within-range? num 59 76))
