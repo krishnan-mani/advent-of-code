@@ -24,8 +24,14 @@
 (defn read-customs-forms-responses [filename]
   (str/split (slurp filename) #"\n\n"))
 
+(defn sum-count-yes [responses]
+  (reduce + (map count-yes responses)))
+
+(defn sum-count-common [responses]
+  (reduce + (map count-common responses)))
+
 (def customs-forms-responses (read-customs-forms-responses "test/resources/customs_forms_responses.txt"))
 (defn -main [& args]
-  (println "Sum of counts of customs forms group responses:" (reduce + (map count-yes customs-forms-responses)))
-  (println "Sum of common responses within groups:" (reduce + (map count-common customs-forms-responses)))
+  (println "Sum of counts of customs forms group responses:" (sum-count-yes customs-forms-responses))
+  (println "Sum of common responses within groups:" (sum-count-common customs-forms-responses))
   )

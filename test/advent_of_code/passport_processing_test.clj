@@ -2,7 +2,10 @@
   (:require [clojure.test :refer :all])
   (:require [advent-of-code.passport-processing :refer :all]))
 
-
+(deftest acceptance-tests
+  (is (= 204 (count-basically-valid-passports passports-to-validate)))
+  (is (= 179 (count-fully-valid-passports passports-to-validate)))
+  )
 
 (def invalid-test-passport
   "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884\nhcl:#cfa07d byr:1929")

@@ -1,5 +1,6 @@
 (ns advent-of-code.passport-processing
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str])
+  (:require [clojure.core.match :refer [match]]))
 
 (def optional-fields #{"cid"})
 (def required-fields #{"byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid"})
@@ -44,10 +45,10 @@
 (defn valid-height? [_string]
   (let [height (-> _string (str/split colon-pattern) (last))
         num (read-string (re-find #"[\d]*" height))]
-    (or (if (.endsWith height "cm") (within-range? num 150 193))
-        (if (.endsWith height "in") (within-range? num 59 76))
-        false)
-    ))
+    (match [(last (str/split height #"\d"))]
+           ["cm"] (within-range? num 150 193)
+           ["in"] (within-range? num 59 76)
+           :else false)))
 
 (defn valid-hair-color? [_string]
   (let [hair-color (-> _string (str/split,,, colon-pattern) (last))]
@@ -96,9 +97,13 @@
   (str/split (slurp filename) #"\n\n"))
 
 (def passports-to-validate (read-passports "test/resources/passport_batch.txt"))
+
+(defn count-basically-valid-passports [passports]
+  (count (filter identity (map basically-valid-passport? passports))))
+
+(defn count-fully-valid-passports [passports]
+  (count (filter identity (map fully-valid-passport? passports))))
+
 (defn -main [& args]
-  (println "Number of basic valid passports:"
-           (count (filter identity (map basically-valid-passport? passports-to-validate))))
-  (println "Number of fully valid passports:"
-           (count (filter identity (map fully-valid-passport? passports-to-validate))))
-  )
+  (println "Number of basic valid passports:" (count-basically-valid-passports passports-to-validate))
+  (println "Number of fully valid passports:" (count-fully-valid-passports passports-to-validate)))

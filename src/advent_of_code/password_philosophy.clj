@@ -113,7 +113,7 @@
   )
 
 (defn count-valid-passwords-by-position [filename]
-  (let [password-lines-by-position (read-passwords-from-file read-password-line-with-positions "test/resources/password_policies.txt")]
+  (let [password-lines-by-position (read-passwords-from-file read-password-line-with-positions filename)]
     (count-true valid-password-line-by-position? password-lines-by-position)
     ))
 

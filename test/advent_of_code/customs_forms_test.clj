@@ -24,3 +24,8 @@
   (is (= 0 (count-common "dlfbyscp\noruaxtg\nrowqu\ngze\ni")))
   (is (= 0 (count-common "rbwdsfcgute\noa\nlqizp\nkxvjyz")))
   )
+
+(deftest acceptance-tests
+  (is (= 6878 (sum-count-yes customs-forms-responses)))
+  (is (= 3464 (sum-count-common customs-forms-responses)))
+  )

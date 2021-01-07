@@ -25,6 +25,6 @@
 
 (defn -main
   [& args]
-  (println (find-two-numbers sum numbers))
-  (println (find-three-numbers sum numbers))
+  (println "Two numbers that add to 2020:" (find-two-numbers sum numbers))
+  (println "Three numbers that add to 2020:" (find-three-numbers sum numbers))
   )
