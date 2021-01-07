@@ -64,13 +64,31 @@
   (is (= false (valid-by-position? "ccccccccc" 2 9 "b")))
   )
 
-(deftest occurs?-test
-  (is (= 1 (occurs? [33 37] 33)))
-  (is (= 0 (occurs? [33 37] 39)))
+(deftest bin-contains?-test
+  (is (= 1 (bin-contains? [33 37] 33)))
+  (is (= 0 (bin-contains? [33 37] 39)))
   )
 
 (deftest count-true-test
   (is (= 1 (count-true even? [2 3])))
   (is (= 2 (count-true even? [2 3 4])))
   (is (= 0 (count-true even? [1 3])))
+  )
+
+(deftest first-before-delimiter-test
+  (is (= "a" (first-before-delimiter "a b c" " ")))
+  (is (= "a b" (first-before-delimiter "a b\tc" "\t")))
+  )
+
+(deftest last-after-delimiter-test
+  (is (= "c" (last-after-delimiter "a b c" " ")))
+  (is (= "cd" (last-after-delimiter "a b\ncd" "\n")))
+  )
+
+(deftest count-valid-passwords-old-job-test
+  (is (= 600 (count-valid-passwords-old-job "test/resources/password_policies.txt")))
+  )
+
+(deftest count-valid-passwords-by-position-test
+  (is (= 245 (count-valid-passwords-by-position "test/resources/password_policies.txt")))
   )
