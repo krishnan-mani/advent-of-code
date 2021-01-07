@@ -33,5 +33,5 @@
 (def customs-forms-responses (read-customs-forms-responses "test/resources/customs_forms_responses.txt"))
 (defn -main [& args]
   (println "Sum of counts of customs forms group responses:" (sum-count-yes customs-forms-responses))
-  (println "Sum of common responses within groups:" (reduce + (map count-common customs-forms-responses)))
+  (println "Sum of common responses within groups:" (sum-count-common customs-forms-responses))
   )
