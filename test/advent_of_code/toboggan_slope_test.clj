@@ -2,6 +2,11 @@
   (:require [clojure.test :refer :all])
   (:require [advent-of-code.toboggan-slope :refer :all]))
 
+(deftest acceptance-tests
+  (is (= 176 (count-trees-for-example-slope)))
+  (is (= '(85 176 96 87 47) tree-counts))
+  )
+
 (deftest landed-on-tree?-test
   (is (= true (landed_on_tree? ".#.#" 3)))
   (is (= false (landed_on_tree? ".#.#" 2)))
