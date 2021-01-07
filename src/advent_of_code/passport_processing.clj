@@ -96,9 +96,13 @@
   (str/split (slurp filename) #"\n\n"))
 
 (def passports-to-validate (read-passports "test/resources/passport_batch.txt"))
+
+(defn count-basically-valid-passports [passports]
+  (count (filter identity (map basically-valid-passport? passports))))
+
+(defn count-fully-valid-passports [passports]
+  (count (filter identity (map fully-valid-passport? passports))))
+
 (defn -main [& args]
-  (println "Number of basic valid passports:"
-           (count (filter identity (map basically-valid-passport? passports-to-validate))))
-  (println "Number of fully valid passports:"
-           (count (filter identity (map fully-valid-passport? passports-to-validate))))
-  )
+  (println "Number of basic valid passports:" (count-basically-valid-passports passports-to-validate))
+  (println "Number of fully valid passports:" (count-fully-valid-passports passports-to-validate)))
