@@ -63,3 +63,8 @@
   (is (= true (missing-next-int? [1 3] 1)))
   (is (= false (missing-next-int? [1 3] 2)))
   )
+
+(deftest acceptance-tests
+  (is (= 994 (highest-seat-id boarding-passes)))
+  (is (= 741 (missing-seat-num boarding-passes)))
+  )
