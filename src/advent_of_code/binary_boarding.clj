@@ -74,9 +74,12 @@
       ))
   )
 
+(defn highest-seat-id [passes]
+  (apply max (map seat-id passes)))
+
+(defn missing-seat-num [passes]
+  (find-missing-num (map seat-id passes)))
+
 (defn -main [& args]
-  (println "Highest seat ID on a boarding pass:"
-           (apply max (map seat-id boarding-passes)))
-  (println "Seat ID missing in boarding passes:"
-           (find-missing-num (map seat-id boarding-passes)))
-  )
+  (println "Highest seat ID on a boarding pass:" (highest-seat-id boarding-passes))
+  (println "Seat ID missing in boarding passes:" (missing-seat-num boarding-passes)))
