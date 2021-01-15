@@ -46,14 +46,9 @@
   (map f (str/split-lines (slurp filename))))
 
 (defn occurrences [_string chr]
-  (let [length (count _string)]
-    (if (zero? length)
-      0
-      (let [first_chr (subs _string 0 1)
-            rest_string (subs _string 1)]
-        (if (= 1 length)
-          (if (= chr first_chr) 1 0)
-          (+ (occurrences first_chr chr) (occurrences rest_string chr)))))))
+  (let [character (.charAt chr 0)
+        str-characters (seq _string)]
+    (count (filter #{character} str-characters))))
 
 (defn valid-by-occurrence? [password min max chr]
   (let [occurrences (occurrences password chr)]
