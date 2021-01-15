@@ -38,3 +38,13 @@
   (is (= false (directly-contain-shiny-gold-bag? {:top "shiny plum" :contents []})))
   (is (= true (directly-contain-shiny-gold-bag? {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :directly-contains true})))
   )
+
+(deftest indirectly-contains-shiny-gold-bag-test
+  (is (= true (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender" "dull white"})))
+  (is (= false (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} #{"bright lavender" "dull white"})))
+  )
+
+(deftest mark-indirectly-contains-shiny-gold-bag-test
+  (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :indirectly-contains true} (mark-indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender" "dull white"})))
+  (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} (mark-indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} #{"bright lavender" "dull white"})))
+  )

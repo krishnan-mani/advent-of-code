@@ -1,12 +1,10 @@
 (ns advent-of-code.handy-haversacks
   (:require [clojure.string :as str])
   (:require [rx.lang.clojure.core :as rx])
-  (:require [clojure.core.match :refer [match]])
-  )
+  (:require [clojure.core.match :refer [match]]))
 
 (defn read-top-bag [description]
-  (-> description (str/split #"bags contain") (first) (str/trim))
-  )
+  (-> description (str/split #"bags contain") (first) (str/trim)))
 
 (defn read-content-bag [content-bag-description]
   (-> content-bag-description (str/split #" bags") (first) (str/split #"\d") (last) (str/trim)))
@@ -15,30 +13,34 @@
   (let [contents-str (-> description (str/split #"bags contain") (last) (str/trim))]
     (match [contents-str]
            ["no other bags"] []
-           [bags] (map read-content-bag (str/split bags #",")))
-    ))
+           [bags] (map read-content-bag (str/split bags #",")))))
 
 (defn read-bag-rule [description]
   (let [desc (str/replace description "." "")
         top (read-top-bag desc)
         contents (read-contents desc)]
-    {:top top :contents contents})
-  )
+    {:top top :contents contents}))
 
 (defn bag-descriptions [filename]
   (str/split-lines (slurp filename)))
 
 (defn directly-contains-another [bag-rule another-bag]
   (let [contents (:contents bag-rule)]
-    (boolean (some #{another-bag} contents)))
-  )
+    (boolean (some #{another-bag} contents))))
 
 (defn mark-directly-contains-shiny-gold-bag [bag-rule]
   (if (directly-contains-another bag-rule "shiny gold")
     (assoc bag-rule :directly-contains true)
-    bag-rule
-    )
-  )
+    bag-rule))
+
+(defn indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
+  (let [contents (:contents bag-rule)]
+    (boolean (some direct-bag-colours contents))))
+
+(defn mark-indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
+  (if (indirectly-contains-shiny-gold-bag bag-rule direct-bag-colours)
+    (assoc bag-rule :indirectly-contains true)
+    bag-rule))
 
 (defn directly-contain-shiny-gold-bag? [bag-rule]
   (boolean (:directly-contains bag-rule)))
