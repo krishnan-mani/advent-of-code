@@ -1,7 +1,8 @@
 (ns advent-of-code.handy-haversacks
   (:require [clojure.string :as str])
   (:require [rx.lang.clojure.core :as rx])
-  (:require [clojure.core.match :refer [match]]))
+  (:require [clojure.core.match :refer [match]])
+  (:require [clojure.set :as cset]))
 
 (defn read-top-bag [description]
   (-> description (str/split #"bags contain") (first) (str/trim)))
@@ -58,5 +59,15 @@
                      (mark-directly-contains-shiny-gold-bag)
                      (append-to-bags-atom)
                      ))
-  (prn @bags-directly-containing-gold-bags)
-  )
+  (def bag-rules
+    (map read-bag-rule (bag-descriptions "test/resources/handy_haversacks.txt")))
+
+  (def marked-bag-rules (map
+                          #(-> %
+                               (mark-directly-contains-shiny-gold-bag)
+                               (mark-indirectly-contains-shiny-gold-bag @bags-directly-containing-gold-bags)) bag-rules))
+
+  (def bags-indirectly-contain-shiny-gold-bags (reduce #(if (or (:directly-contains %2) (:indirectly-contains %2)) (conj %1 (:top %2)) %1) #{} marked-bag-rules))
+  ;(prn bags-indirectly-contain-shiny-gold-bags)
+  ;(prn @bags-directly-containing-gold-bags)
+  (prn "No. of bag colours that can contain shiny gold bags:" (count (cset/union @bags-directly-containing-gold-bags bags-indirectly-contain-shiny-gold-bags))))
