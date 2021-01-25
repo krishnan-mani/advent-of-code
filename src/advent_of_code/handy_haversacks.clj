@@ -8,7 +8,7 @@
   (-> description (str/split #"bags contain") (first) (str/trim)))
 
 (defn read-content-bag [content-bag-description]
-  (-> content-bag-description (str/split #" bags") (first) (str/split #"\d") (last) (str/trim)))
+  (-> content-bag-description (str/split #" bag") (first) (str/split #"\d") (last) (str/trim)))
 
 (defn read-contents [description]
   (let [contents-str (-> description (str/split #"bags contain") (last) (str/trim))]
@@ -46,28 +46,35 @@
 (defn directly-contain-shiny-gold-bag? [bag-rule]
   (boolean (:directly-contains bag-rule)))
 
+(defn indirectly-contain-shiny-gold-bag? [bag-rule]
+  (boolean (:indirectly-contains bag-rule)))
+
 (def bags-directly-containing-gold-bags (atom #{}))
 
-(defn append-to-bags-atom [bag-rule]
-  (if (directly-contain-shiny-gold-bag? bag-rule)
-    (swap! bags-directly-containing-gold-bags conj (:top bag-rule))))
+(defn collect-colors-directly-contains-shiny-gold-bag [description]
+  (-> description
+      (read-bag-rule)
+      (mark-directly-contains-shiny-gold-bag)))
 
 (defn -main [& args]
-  (def bag-rules-observable (rx/seq->o (bag-descriptions "test/resources/handy_haversacks.txt")))
-  (rx/subscribe bag-rules-observable
-                #(-> % (read-bag-rule)
-                     (mark-directly-contains-shiny-gold-bag)
-                     (append-to-bags-atom)
-                     ))
   (def bag-rules
-    (map read-bag-rule (bag-descriptions "test/resources/handy_haversacks.txt")))
+    (map collect-colors-directly-contains-shiny-gold-bag (bag-descriptions "test/resources/handy_haversacks.txt")))
 
-  (def marked-bag-rules (map
-                          #(-> %
-                               (mark-directly-contains-shiny-gold-bag)
-                               (mark-indirectly-contains-shiny-gold-bag @bags-directly-containing-gold-bags)) bag-rules))
+  (doseq [rule bag-rules]
+    (if (directly-contain-shiny-gold-bag? rule)
+      (swap! bags-directly-containing-gold-bags conj (:top rule))))
 
-  (def bags-indirectly-contain-shiny-gold-bags (reduce #(if (or (:directly-contains %2) (:indirectly-contains %2)) (conj %1 (:top %2)) %1) #{} marked-bag-rules))
-  ;(prn bags-indirectly-contain-shiny-gold-bags)
-  ;(prn @bags-directly-containing-gold-bags)
-  (prn "No. of bag colours that can contain shiny gold bags:" (count (cset/union @bags-directly-containing-gold-bags bags-indirectly-contain-shiny-gold-bags))))
+  (prn @bags-directly-containing-gold-bags)
+  (def fully-marked-bag-rules
+    (map #(mark-indirectly-contains-shiny-gold-bag % @bags-directly-containing-gold-bags) bag-rules))
+
+  (println fully-marked-bag-rules)
+  (def all-colours-containing-shiny-gold-bags
+    (reduce #(if (or (directly-contain-shiny-gold-bag? %2)
+                     (indirectly-contain-shiny-gold-bag? %2))
+               (conj %1 (:top %2))
+               %1) #{} fully-marked-bag-rules))
+
+  ;(prn all-colours-containing-shiny-gold-bags)
+  ;(println "No. of bag colours that can contain shiny gold bags:" (count all-colours-containing-shiny-gold-bags))
+  )
