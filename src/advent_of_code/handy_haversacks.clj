@@ -22,24 +22,18 @@
         contents (read-contents desc)]
     {:top top :contents contents}))
 
-(defn bag-descriptions [filename]
+(defn read-bag-descriptions-from-file [filename]
   (str/split-lines (slurp filename)))
 
-(defn directly-contains-another [bag-rule another-bag]
-  (let [contents (:contents bag-rule)]
-    (boolean (some #{another-bag} contents))))
+(defn append-key-values-to-map [map key value]
+  (let [curr-value (get map key #{})]
+    (assoc map key (conj curr-value value))))
 
-(defn indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
-  (let [contents (:contents bag-rule)]
-    (boolean (some direct-bag-colours contents))))
+(defn populate-bag-and-parents [bag-and-parents-atom bag-rule]
+  (doseq [key (:contents bag-rule)]
+    (swap! bag-and-parents-atom append-key-values-to-map key (:top bag-rule))))
 
-(defn directly-contain-shiny-gold-bag? [bag-rule]
-  (boolean (:directly-contains bag-rule)))
-
-(defn indirectly-contain-shiny-gold-bag? [bag-rule]
-  (boolean (:indirectly-contains bag-rule)))
-
-(def bags-directly-containing-gold-bags (atom #{}))
+(defn find-containing-colours [bag-and-parents-atom bag-colour])
 
 (defn -main [& args]
   ;(def bag-rules
@@ -49,7 +43,6 @@
   ;  (if (directly-contain-shiny-gold-bag? rule)
   ;    (swap! bags-directly-containing-gold-bags conj (:top rule))))
 
-  (prn @bags-directly-containing-gold-bags)
   ;(def fully-marked-bag-rules
   ;  (map #(mark-indirectly-contains-shiny-gold-bag % @bags-directly-containing-gold-bags) bag-rules))
 

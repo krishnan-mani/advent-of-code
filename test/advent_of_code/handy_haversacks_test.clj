@@ -3,7 +3,6 @@
   (:require [advent-of-code.handy-haversacks :refer :all]
             [clojure.string :as str]))
 
-
 (deftest read-top-bag-test
   (is (= "shiny plum" (read-top-bag "shiny plum bags contain no other bags")))
   (is (= "clear crimson" (read-top-bag "clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 3 dotted beige bags, 3 dotted black bags")))
@@ -25,28 +24,23 @@
   (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} (read-bag-rule "vibrant beige bags contain 3 drab gray bags, 4 shiny gold bags, 4 dull white bags, 3 bright lavender bags.")))
   )
 
-(deftest directly-contains-another-test
-  (is (= true (directly-contains-another {:top "clear crimson" :contents ["pale aqua" "plaid magenta"]} "pale aqua")))
-  (is (= false (directly-contains-another {:top "clear crimson" :contents ["pale aqua" "plaid magenta"]} "shiny plum")))
-  )
-
-(deftest directly-contain-shiny-gold-bag?-test
-  (is (= false (directly-contain-shiny-gold-bag? {:top "shiny plum" :contents []})))
-  (is (= true (directly-contain-shiny-gold-bag? {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :directly-contains true})))
-  )
-
-(deftest indirectly-contains-shiny-gold-bag-test
-  (is (= true (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender" "dull white"})))
-  (is (= true (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender"})))
-  (is (= false (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} #{"bright lavender" "dull white"})))
-  )
-
 (def test-bag-descriptions (str/split-lines "light red bags contain 1 bright white bag, 2 muted yellow bags.\ndark orange bags contain 3 bright white bags, 4 muted yellow bags.\nbright white bags contain 1 shiny gold bag.\nmuted yellow bags contain 2 shiny gold bags, 9 faded blue bags.\nshiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.\ndark olive bags contain 3 faded blue bags, 4 dotted black bags.\nvibrant plum bags contain 5 faded blue bags, 6 dotted black bags.\nfaded blue bags contain no other bags.\ndotted black bags contain no other bags."))
 (def test-bag-rules (map read-bag-rule test-bag-descriptions))
 (deftest test-bag-rule-count
-  (prn test-bag-rules)
+  ;(prn test-bag-rules)
   (is (= 9 (count test-bag-rules))))
-;(def test-marked-bag-rules (map #(mark-directly-contains-shiny-gold-bag %) test-bag-rules))
-(def test-bag-colours-directly-containing-shiny-gold-bags (atom #{}))
 
+(def bag-and-parents (atom {}))
+(deftest populate-bag-and-parents-test
+  (doseq [rule test-bag-rules]
+    (populate-bag-and-parents bag-and-parents rule))
 
+  (is (= {"bright white" #{"light red" "dark orange"}, "muted yellow" #{"light red" "dark orange"}, "shiny gold" #{"muted yellow" "bright white"}, "faded blue" #{"muted yellow" "vibrant plum" "dark olive"}, "dark olive" #{"shiny gold"}, "vibrant plum" #{"shiny gold"}, "dotted black" #{"vibrant plum" "dark olive"}} @bag-and-parents))
+
+  ;(is (= [] (find-containing-colours bag-and-parents "shiny gold")))
+  )
+
+(deftest append-key-values-to-map-test
+  (is (= {"a" #{1}} (append-key-values-to-map {} "a" 1)))
+  (is (= {"a" #{1 2}} (append-key-values-to-map {"a" #{1}} "a" 2)))
+  )
