@@ -29,19 +29,9 @@
   (let [contents (:contents bag-rule)]
     (boolean (some #{another-bag} contents))))
 
-(defn mark-directly-contains-shiny-gold-bag [bag-rule]
-  (if (directly-contains-another bag-rule "shiny gold")
-    (assoc bag-rule :directly-contains true)
-    bag-rule))
-
 (defn indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
   (let [contents (:contents bag-rule)]
     (boolean (some direct-bag-colours contents))))
-
-;(defn mark-indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
-;  (if (indirectly-contains-shiny-gold-bag bag-rule direct-bag-colours)
-;    (assoc bag-rule :indirectly-contains true)
-;    bag-rule))
 
 (defn directly-contain-shiny-gold-bag? [bag-rule]
   (boolean (:directly-contains bag-rule)))
@@ -51,18 +41,13 @@
 
 (def bags-directly-containing-gold-bags (atom #{}))
 
-(defn collect-colors-directly-contains-shiny-gold-bag [description]
-  (-> description
-      (read-bag-rule)
-      (mark-directly-contains-shiny-gold-bag)))
-
 (defn -main [& args]
-  (def bag-rules
-    (map collect-colors-directly-contains-shiny-gold-bag (bag-descriptions "test/resources/handy_haversacks.txt")))
+  ;(def bag-rules
+  ;  (map collect-colors-directly-contains-shiny-gold-bag (bag-descriptions "test/resources/handy_haversacks.txt")))
 
-  (doseq [rule bag-rules]
-    (if (directly-contain-shiny-gold-bag? rule)
-      (swap! bags-directly-containing-gold-bags conj (:top rule))))
+  ;(doseq [rule bag-rules]
+  ;  (if (directly-contain-shiny-gold-bag? rule)
+  ;    (swap! bags-directly-containing-gold-bags conj (:top rule))))
 
   (prn @bags-directly-containing-gold-bags)
   ;(def fully-marked-bag-rules

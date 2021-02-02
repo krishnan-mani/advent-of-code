@@ -35,30 +35,18 @@
   (is (= true (directly-contain-shiny-gold-bag? {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :directly-contains true})))
   )
 
-(deftest mark-directly-contains-shiny-gold-bag-test
-  (is (= {:top "shiny plum" :contents []} (mark-directly-contains-shiny-gold-bag {:top "shiny plum" :contents []})))
-  (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :directly-contains true} (mark-directly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]})))
-  (is (= {:top "clear crimson" :contents ["pale aqua" "plaid magenta" "dotted beige" "dotted black"]} (mark-directly-contains-shiny-gold-bag {:top "clear crimson" :contents ["pale aqua" "plaid magenta" "dotted beige" "dotted black"]})))
-  )
-
 (deftest indirectly-contains-shiny-gold-bag-test
   (is (= true (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender" "dull white"})))
   (is (= true (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender"})))
   (is (= false (indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} #{"bright lavender" "dull white"})))
   )
 
-;(deftest mark-indirectly-contains-shiny-gold-bag-test
-;  (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :indirectly-contains true} (mark-indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"bright lavender" "dull white"})))
-;  (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"] :indirectly-contains true} (mark-indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold" "dull white" "bright lavender"]} #{"dull white"})))
-;  (is (= {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} (mark-indirectly-contains-shiny-gold-bag {:top "vibrant beige", :contents ["drab gray" "shiny gold"]} #{"bright lavender" "dull white"})))
-;  )
-
 (def test-bag-descriptions (str/split-lines "light red bags contain 1 bright white bag, 2 muted yellow bags.\ndark orange bags contain 3 bright white bags, 4 muted yellow bags.\nbright white bags contain 1 shiny gold bag.\nmuted yellow bags contain 2 shiny gold bags, 9 faded blue bags.\nshiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.\ndark olive bags contain 3 faded blue bags, 4 dotted black bags.\nvibrant plum bags contain 5 faded blue bags, 6 dotted black bags.\nfaded blue bags contain no other bags.\ndotted black bags contain no other bags."))
 (def test-bag-rules (map read-bag-rule test-bag-descriptions))
 (deftest test-bag-rule-count
   (prn test-bag-rules)
   (is (= 9 (count test-bag-rules))))
-(def test-marked-bag-rules (map #(mark-directly-contains-shiny-gold-bag %) test-bag-rules))
+;(def test-marked-bag-rules (map #(mark-directly-contains-shiny-gold-bag %) test-bag-rules))
 (def test-bag-colours-directly-containing-shiny-gold-bags (atom #{}))
 
 
