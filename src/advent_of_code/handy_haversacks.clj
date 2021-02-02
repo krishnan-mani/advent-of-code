@@ -38,10 +38,10 @@
   (let [contents (:contents bag-rule)]
     (boolean (some direct-bag-colours contents))))
 
-(defn mark-indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
-  (if (indirectly-contains-shiny-gold-bag bag-rule direct-bag-colours)
-    (assoc bag-rule :indirectly-contains true)
-    bag-rule))
+;(defn mark-indirectly-contains-shiny-gold-bag [bag-rule direct-bag-colours]
+;  (if (indirectly-contains-shiny-gold-bag bag-rule direct-bag-colours)
+;    (assoc bag-rule :indirectly-contains true)
+;    bag-rule))
 
 (defn directly-contain-shiny-gold-bag? [bag-rule]
   (boolean (:directly-contains bag-rule)))
@@ -65,15 +65,15 @@
       (swap! bags-directly-containing-gold-bags conj (:top rule))))
 
   (prn @bags-directly-containing-gold-bags)
-  (def fully-marked-bag-rules
-    (map #(mark-indirectly-contains-shiny-gold-bag % @bags-directly-containing-gold-bags) bag-rules))
+  ;(def fully-marked-bag-rules
+  ;  (map #(mark-indirectly-contains-shiny-gold-bag % @bags-directly-containing-gold-bags) bag-rules))
 
-  (println fully-marked-bag-rules)
-  (def all-colours-containing-shiny-gold-bags
-    (reduce #(if (or (directly-contain-shiny-gold-bag? %2)
-                     (indirectly-contain-shiny-gold-bag? %2))
-               (conj %1 (:top %2))
-               %1) #{} fully-marked-bag-rules))
+  ;(println fully-marked-bag-rules)
+  ;(def all-colours-containing-shiny-gold-bags
+  ;  (reduce #(if (or (directly-contain-shiny-gold-bag? %2)
+  ;                   (indirectly-contain-shiny-gold-bag? %2))
+  ;             (conj %1 (:top %2))
+  ;             %1) #{} fully-marked-bag-rules))
 
   ;(prn all-colours-containing-shiny-gold-bags)
   ;(println "No. of bag colours that can contain shiny gold bags:" (count all-colours-containing-shiny-gold-bags))
