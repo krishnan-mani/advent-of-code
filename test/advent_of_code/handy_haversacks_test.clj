@@ -27,17 +27,17 @@
 (def test-bag-descriptions (str/split-lines "light red bags contain 1 bright white bag, 2 muted yellow bags.\ndark orange bags contain 3 bright white bags, 4 muted yellow bags.\nbright white bags contain 1 shiny gold bag.\nmuted yellow bags contain 2 shiny gold bags, 9 faded blue bags.\nshiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.\ndark olive bags contain 3 faded blue bags, 4 dotted black bags.\nvibrant plum bags contain 5 faded blue bags, 6 dotted black bags.\nfaded blue bags contain no other bags.\ndotted black bags contain no other bags."))
 (def test-bag-rules (map read-bag-rule test-bag-descriptions))
 (deftest test-bag-rule-count
-  ;(prn test-bag-rules)
   (is (= 9 (count test-bag-rules))))
 
 (def bag-and-parents (atom {}))
 (deftest populate-bag-and-parents-test
   (doseq [rule test-bag-rules]
     (populate-bag-and-parents bag-and-parents rule))
-
   (is (= {"bright white" #{"light red" "dark orange"}, "muted yellow" #{"light red" "dark orange"}, "shiny gold" #{"muted yellow" "bright white"}, "faded blue" #{"muted yellow" "vibrant plum" "dark olive"}, "dark olive" #{"shiny gold"}, "vibrant plum" #{"shiny gold"}, "dotted black" #{"vibrant plum" "dark olive"}} @bag-and-parents))
 
-  ;(is (= [] (find-containing-colours bag-and-parents "shiny gold")))
+  (deftest find-containing-colours-test
+    (is (= #{"muted yellow" "light red" "dark orange" "bright white" "shiny gold"} (find-containing-colours @bag-and-parents "shiny gold")))
+    )
   )
 
 (deftest append-key-values-to-map-test
