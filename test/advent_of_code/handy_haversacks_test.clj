@@ -20,6 +20,12 @@
   (is (= "pale aqua" (read-content-bag "3 pale aqua bags")))
   )
 
+(deftest read-bag-contents-test
+  (is (= {"bright white" {"shiny gold" 1}} (read-bag-contents "bright white bags contain 1 shiny gold bag.")))
+  (is (= {"shiny plum" {}} (read-bag-contents "shiny plum bags contain no other bags.")))
+  (is (= {"clear crimson" {"pale aqua" 3 "plaid magenta" 4 "dotted beige" 3 "dotted black" 3}} (read-bag-contents "clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 3 dotted beige bags, 3 dotted black bags.")))
+  )
+
 (deftest read-contents-test
   (is (= [] (read-contents "shiny plum bags contain no other bags")))
   (is (= ["pale aqua" "plaid magenta" "dotted beige" "dotted black"] (read-contents "clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 3 dotted beige bags, 3 dotted black bags")))

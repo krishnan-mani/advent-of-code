@@ -35,6 +35,13 @@
            ["no other bags"] []
            [bags] (map read-content-bag (str/split bags #",")))))
 
+
+(defn read-bag-contents [description]
+  (let [desc (str/replace description "." "")
+        top (read-top-bag desc)
+        contents (read-contents-with-count desc)]
+    {top contents}))
+
 (defn read-bag-rule [description]
   (let [desc (str/replace description "." "")
         top (read-top-bag desc)
