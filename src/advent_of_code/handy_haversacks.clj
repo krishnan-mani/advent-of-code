@@ -42,6 +42,10 @@
         contents (read-contents-with-count desc)]
     {top contents}))
 
+(defn count-innermost-bags [bags-map bag-colour]
+  (let [contents (bags-map bag-colour)]
+    (reduce #(* %1 (last %2) (count-innermost-bags bags-map (first %2))) 1 contents)))
+
 (defn read-bag-rule [description]
   (let [desc (str/replace description "." "")
         top (read-top-bag desc)

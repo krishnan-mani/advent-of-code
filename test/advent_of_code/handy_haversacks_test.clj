@@ -16,6 +16,15 @@
   (is (= {"pale aqua" 3 "plaid magenta" 4 "dotted beige" 5 "dotted black" 1} (read-contents-with-count "clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 5 dotted beige bags, 1 dotted black bags")))
   )
 
+(def bags-and-contents (atom {}))
+(deftest total-number-of-bags-in-bag-test
+  (def bag-count-descriptions (str/split-lines "shiny gold bags contain 2 dark red bags.\ndark red bags contain 2 dark orange bags.\ndark orange bags contain 2 dark yellow bags.\ndark yellow bags contain 2 dark green bags.\ndark green bags contain 2 dark blue bags.\ndark blue bags contain 2 dark violet bags.\ndark violet bags contain no other bags."))
+  (is (= 7 (count bag-count-descriptions)))
+  (doseq [bag-description bag-count-descriptions]
+    (swap! bags-and-contents conj (read-bag-contents bag-description)))
+  (is (= 64 (count-innermost-bags @bags-and-contents "shiny gold")))
+  )
+
 (deftest read-content-bag-test
   (is (= "pale aqua" (read-content-bag "3 pale aqua bags")))
   )
