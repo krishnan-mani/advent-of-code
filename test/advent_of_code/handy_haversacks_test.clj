@@ -8,6 +8,10 @@
   (is (= "clear crimson" (read-top-bag "clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 3 dotted beige bags, 3 dotted black bags")))
   )
 
+
+(deftest read-content-bag-and-count-test
+  (is (= {"pale aqua" 3} (read-content-bag-and-count "3 pale aqua bags"))))
+
 (deftest read-content-bag-test
   (is (= "pale aqua" (read-content-bag "3 pale aqua bags")))
   )

@@ -6,6 +6,21 @@
 (defn read-top-bag [description]
   (-> description (str/split #"bags contain") (first) (str/trim)))
 
+(defn read-content-bag-and-count [content-bag-description]
+  (let [count-and-colour (-> content-bag-description
+                   (str/split #" bag")
+                   (first))
+        count (-> count-and-colour
+                  (str/split #" ")
+                  (first)
+                  (read-string))
+        colour (-> count-and-colour
+                   (.replace (str count) "")
+                   (str/trim))]
+    {colour count}
+    )
+  )
+
 (defn read-content-bag [content-bag-description]
   (-> content-bag-description (str/split #" bag") (first) (str/split #"\d") (last) (str/trim)))
 
