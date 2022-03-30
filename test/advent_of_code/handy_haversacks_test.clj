@@ -3,6 +3,14 @@
   (:require [advent-of-code.handy-haversacks :refer :all]
             [clojure.string :as str]))
 
+(deftest my-match-test
+  (is (= "range" (my-match "2-71")))
+  (is (= "all-range" (my-match "*")))
+  (is (= 2 (my-match "2")))
+  (is (= nil (my-match "/")))
+  )
+
+
 (deftest read-top-bag-test
   (is (= "shiny plum" (read-top-bag "shiny plum bags contain no other bags")))
   (is (= "clear crimson" (read-top-bag "clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 3 dotted beige bags, 3 dotted black bags")))

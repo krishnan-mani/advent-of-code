@@ -3,6 +3,19 @@
   (:require [clojure.core.match :refer [match]])
   (:require [clojure.set :as cset]))
 
+(def allowed-values #{1 2})
+
+(defn my-match [str]
+  (cond
+    (str/includes? str "-") "range"
+    (= str "*") "all-range"
+    (read-string str) (allowed-values (read-string str))
+    :else nil
+    ))
+
+
+
+
 (defn read-top-bag [description]
   (-> description (str/split #"bags contain") (first) (str/trim)))
 
